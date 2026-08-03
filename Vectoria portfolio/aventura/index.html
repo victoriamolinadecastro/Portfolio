@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aventura — Case Study · Victoria Molina de Castro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="../fonts/Defante.ttf?v=2" as="font" type="font/ttf" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css" />
+
+<style>
+  @font-face {
+    font-family: "Defante";
+    src: url("../fonts/Defante.ttf?v=2") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #FFFFFF;
+    --text: #333333;
+    --text-2: #808080;
+    --border: #B3B3B3;
+    --surface: #F2F2F2;
+    --accent: #FF0534;
+    --footer: #333333;
+
+    --title: "Defante", "Fredoka", system-ui, sans-serif;
+    --body: "Lato", system-ui, sans-serif;
+
+    --page-max: 1100px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --sec: clamp(56px, 8vw, 92px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .narrow { max-width: 760px; }
+
+  /* ===== Page transitions ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    body { animation: pageIn 0.22s ease both; }
+  }
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+  html.leaving body { opacity: 0; transition: opacity 0.13s ease; }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+  }
+  .nav a {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: var(--text-2);
+    padding: 8px 17px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--text); font-weight: 700; background: #fff; }
+
+  /* ===================== SHARED ===================== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 7px 15px;
+    border-radius: 999px;
+    line-height: 1;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+  }
+  .cta:hover { transform: translateY(-2px) scale(1.02); filter: brightness(0.93); }
+  .cta:active { transform: translateY(0) scale(0.98); }
+  .cta .chev {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 999px;
+    background: #fff; color: var(--accent); font-size: 11px;
+    transition: transform 0.18s ease;
+  }
+  .cta:hover .chev { transform: translateX(4px); }
+
+  .accent-em { color: var(--accent); font-weight: 700; }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  .sec-title {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(28px, 3.6vw, 42px);
+    letter-spacing: -0.5px;
+    line-height: 1.04;
+    margin: 0 0 18px;
+  }
+  .body-text {
+    font-size: clamp(16.5px, 1.4vw, 19px);
+    line-height: 1.7;
+    color: #474747;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .body-text + .body-text { margin-top: 16px; }
+
+  /* image placeholders */
+  .ph {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: var(--surface);
+  }
+  .ph image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ph image-slot::part(button) { border-radius: 0; }
+  .ph > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ===== Image lightbox / zoom ===== */
+  .zoom-btn {
+    position: absolute; top: 12px; right: 12px; z-index: 6;
+    width: 40px; height: 40px; border-radius: 999px;
+    background: rgba(0,0,0,.42); color: #fff; border: none;
+    display: none; align-items: center; justify-content: center;
+    font-size: 15px; cursor: zoom-in; backdrop-filter: blur(4px);
+    opacity: 0; transform: scale(.92);
+    transition: opacity .22s ease, transform .22s ease, background .2s ease;
+  }
+  .zoomable.has-img > .zoom-btn { display: flex; }
+  .zoomable.has-img:hover > .zoom-btn,
+  .zoom-btn:focus-visible { opacity: 1; transform: scale(1); }
+  .zoom-btn:hover { background: var(--accent); }
+  @media (hover: none) {
+    .zoomable.has-img > .zoom-btn { opacity: 1; transform: scale(1); }
+  }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(18,18,18,.95);
+    display: none; align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lb-stage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .lightbox img {
+    max-width: 92vw; max-height: 90vh; object-fit: contain;
+    transform-origin: center center;
+    cursor: zoom-in; user-select: none; -webkit-user-drag: none; touch-action: none;
+  }
+  .lightbox.zoomed img { cursor: grab; }
+  .lb-close {
+    position: absolute; top: 20px; right: 24px; z-index: 2;
+    width: 46px; height: 46px; border-radius: 999px;
+    background: rgba(255,255,255,.12); color: #fff; border: none;
+    font-size: 26px; line-height: 1; cursor: pointer;
+    transition: background .2s ease;
+  }
+  .lb-close:hover { background: var(--accent); }
+  .lb-hint {
+    position: absolute; bottom: 22px; left: 0; right: 0; text-align: center;
+    color: rgba(255,255,255,.55); font-size: 13px; font-weight: 700; letter-spacing: .3px;
+    pointer-events: none;
+  }
+
+  /* reveal on scroll */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: revealUp 0.7s ease both; }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== CASE HERO ===================== */
+  .case-hero { padding-bottom: var(--sec); }
+  .case-hero-media {
+    position: relative;
+    width: 100%;
+    height: clamp(320px, 58vh, 660px);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .case-hero-media image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .case-hero-media image-slot::part(button) { border-radius: 0; }
+  .case-hero-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .case-hero-copy { padding-top: clamp(34px, 4.5vw, 56px); }
+  .case-hero-copy .back-link { margin-bottom: 18px; }
+  .case-hero-copy .card-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+  .case-hero-copy h1 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(40px, 6.6vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.9px;
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .case-hero-copy .lead {
+    font-size: clamp(17px, 1.6vw, 22px);
+    line-height: 1.6;
+    color: #474747;
+    max-width: 64ch;
+    margin: 0 0 24px;
+    text-wrap: pretty;
+  }
+  .meta-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .meta-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 9px 17px;
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+  }
+  .meta-tag i { color: var(--accent); font-size: 13px; }
+
+  /* ===================== TWO-COLUMN (context/objective) ===================== */
+  .block { padding-block: calc(var(--sec) * 0.5); }
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(20px, 2.6vw, 28px);
+  }
+  .info-card {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: clamp(26px, 3.2vw, 40px);
+  }
+  .info-card h3 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(21px, 2.2vw, 27px);
+    letter-spacing: -0.3px;
+    margin: 0 0 14px;
+  }
+  .obj-list { list-style: none; margin: 0; padding: 0; }
+  .obj-list li {
+    position: relative;
+    padding-left: 30px;
+    font-size: clamp(15.5px, 1.3vw, 17px);
+    line-height: 1.55;
+    color: #474747;
+    margin-bottom: 14px;
+  }
+  .obj-list li:last-child { margin-bottom: 0; }
+  .obj-list li i {
+    position: absolute; left: 0; top: 2px;
+    color: var(--accent); font-size: 16px;
+  }
+  .obj-list li strong { color: var(--text); font-weight: 700; }
+
+  /* ===================== SOLUTION ===================== */
+  .solution .body-text { margin-bottom: clamp(28px, 4vw, 40px); }
+  .showcase { aspect-ratio: 21 / 9; }
+
+  /* ===================== ROLE CARDS ===================== */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2vw, 22px);
+    margin-top: clamp(26px, 3vw, 38px);
+  }
+  .role-card {
+    background: var(--surface);
+    border-radius: 22px;
+    padding: clamp(22px, 2.4vw, 30px);
+    transition: transform 0.22s ease;
+  }
+  .role-card:hover { transform: translateY(-4px); }
+  .role-icon {
+    color: var(--text);
+    font-size: 28px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .role-card h3 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(17px, 1.6vw, 20px);
+    letter-spacing: -0.2px;
+    margin: 0 0 8px;
+  }
+  .role-card p {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-2);
+    margin: 0;
+  }
+
+  /* ===================== PROCESS ===================== */
+  .process .body-text { margin-bottom: clamp(28px, 4vw, 40px); }
+  .process-stack { display: flex; flex-direction: column; gap: clamp(18px, 2.4vw, 28px); }
+  .process-item .p-label {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--title); font-weight: 600;
+    font-size: clamp(18px, 1.8vw, 23px);
+    letter-spacing: -0.3px;
+    margin: 0 0 14px;
+  }
+  .flows { aspect-ratio: 16 / 11; }
+  .wires { aspect-ratio: 16 / 11; }
+
+  /* ===================== OUTCOME ===================== */
+  .outcome-card {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: clamp(34px, 5vw, 64px);
+  }
+  .outcome-card .body-text { font-size: clamp(17px, 1.5vw, 21px); max-width: 60ch; }
+  .goal-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+    margin-top: clamp(28px, 3.4vw, 40px);
+  }
+  .goal {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 24px 22px;
+  }
+  .goal i { color: var(--accent); font-size: 27px; margin-bottom: 12px; display: block; }
+  .goal h4 {
+    font-family: var(--title); font-weight: 600;
+    font-size: clamp(16px, 1.5vw, 19px);
+    letter-spacing: -0.2px;
+    margin: 0 0 6px;
+  }
+  .goal p { font-size: 14px; line-height: 1.5; color: var(--text-2); margin: 0; }
+
+  /* ===================== FOOTER ===================== */
+  .footer {
+    background: var(--footer);
+    color: #fff;
+    text-align: center;
+    padding: clamp(64px, 9vw, 100px) 0 clamp(72px, 10vw, 108px);
+    margin-top: var(--sec);
+  }
+  .footer h2 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 5.2vw, 66px);
+    line-height: 1.04;
+    letter-spacing: -0.6px;
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+  .back-link {
+    position: fixed;
+    top: 22px;
+    left: var(--gutter);
+    z-index: 49;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-weight: 700; font-size: 14px;
+    color: var(--text-2);
+    padding: 11px 18px 11px 16px;
+    border-radius: 999px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: color 0.2s ease, gap 0.2s ease, background 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); gap: 13px; background: #fff; }
+  @media (max-width: 600px) {
+    .back-link {
+      position: static;
+      display: inline-flex;
+      margin: 0 0 14px;
+      top: auto; left: auto;
+      font-size: 13px;
+      padding: 9px 15px 9px 13px;
+    }
+    .case-hero-copy { padding-top: clamp(20px, 3vw, 30px); }
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 820px) {
+    .role-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .duo { grid-template-columns: 1fr; }
+    .goal-row { grid-template-columns: 1fr; }
+    .hero-mockup { aspect-ratio: 4 / 3; }
+    .showcase { aspect-ratio: 4 / 3; }
+    .flows, .wires { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 600px) {
+    .role-grid { grid-template-columns: 1fr; }
+    .nav { gap: 2px; padding: 5px 6px; top: 16px; }
+    .nav a { font-size: 13.5px; padding: 7px 13px; }
+  }
+  @media (max-width: 380px) {
+    .nav a { font-size: 12.5px; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/work/" class="active">Work</a>
+    <a href="/about/">About</a>
+    <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+  </nav>
+
+  <main>
+    <!-- ===================== CASE HERO ===================== -->
+    <section class="case-hero">
+      <div class="case-hero-media reveal">
+        <img src="../assets/av-hero-opt.webp" alt="Aventura — hero mockups" />
+      </div>
+      <div class="wrap case-hero-copy">
+        <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
+        <div class="card-tags reveal">
+          <span class="tag">UX</span>
+          <span class="tag">Wireframing</span>
+          <span class="tag">Prototyping</span>
+          <span class="tag">User Flows</span>
+          <span class="tag">UI</span>
+        </div>
+        <h1 class="reveal">Aventura — Gamifying knowledge retention</h1>
+        <p class="lead reveal">Turning Ábaco’s passive digital encyclopedia into an active, game-driven learning experience.</p>
+        <div class="meta-tags reveal">
+          <span class="meta-tag"><i class="fa-solid fa-user-pen"></i> Lead UX/UI</span>
+          <span class="meta-tag"><i class="fa-solid fa-building"></i> Ábaco</span>
+          <span class="meta-tag"><i class="fa-brands fa-figma"></i> Figma</span>
+          <span class="meta-tag"><i class="fa-solid fa-pen-nib"></i> Illustrator</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTEXT & OBJECTIVE ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="duo">
+          <div class="info-card reveal">
+            <p class="eyebrow">Context &amp; challenge</p>
+            <h3>The challenge</h3>
+            <p class="body-text">Ábaco is a digital encyclopedia offering structured educational content across multiple categories. Its experience, though, was built around browsing and lookup — users came, consulted, and left, with little sustained interaction. To lift engagement and retention, we designed Aventura: a themed-trivia gamification layer that rewards active learning.</p>
+          </div>
+          <div class="info-card reveal">
+            <p class="eyebrow">Objective</p>
+            <h3>The objective</h3>
+            <ul class="obj-list">
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Retention</strong> — increase repeat visits and time on platform.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Content exploration</strong> — drive discovery through play.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Immersive experience</strong> — where education and entertainment meet.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== THE SOLUTION ===================== -->
+    <section class="block solution">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">The solution</p>
+          <h2 class="sec-title">A trivia world built on Ábaco’s own content</h2>
+          <p class="body-text">A trivia system structured in modules of 10 questions, themed around Ábaco’s own content. The experience plays out over an illustrated world map, letting users explore different areas of knowledge as they progress. A global ranking adds recurring participation and a competitive edge.</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="ph showcase reveal">
+          <img src="../assets/av-showcase.webp" alt="Aventura — map, trivia and ranking screens" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ROLE & RESPONSIBILITIES ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">Role &amp; responsibilities</p>
+          <h2 class="sec-title">I led the UX and UI design end to end</h2>
+        </div>
+        <div class="role-grid">
+          <div class="role-card reveal">
+            <h3>Wireframing</h3>
+            <p>Visual architecture and structure of the game experience.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Task &amp; user flows</h3>
+            <p>Interaction and navigation paths designed for usability.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>UI design</h3>
+            <p>A visual interface aligned with Ábaco’s identity — accessible and scalable.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Branding</h3>
+            <p>Graphic elements and visual system for Aventura’s identity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROCESS ===================== -->
+    <section class="block process">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">Process</p>
+          <h2 class="sec-title">From flows to wireframes</h2>
+          <p class="body-text">The proof of process behind the screens — mapping how players move through the experience, then translating those paths into structured, testable wireframes.</p>
+        </div>
+        <div class="process-stack">
+          <div class="process-item reveal">
+            <p class="p-label">Task &amp; user flows</p>
+            <div class="ph flows">
+              <img src="../assets/av-flows.webp" alt="Aventura — task and user flows" />
+            </div>
+          </div>
+          <div class="process-item reveal">
+            <p class="p-label">Wireframes</p>
+            <div class="ph wires">
+              <img src="../assets/av-wires.webp" alt="Aventura — wireframes" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== OUTCOME & DESIGN GOALS ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="outcome-card reveal">
+          <p class="eyebrow">Outcome &amp; design goals</p>
+          <h2 class="sec-title">Designing for measurable impact</h2>
+          <p class="body-text">Aventura is a step toward making digital knowledge platforms genuinely interactive. The design was built around clear success criteria — measured through repeat play and progression through the trivia modules.</p>
+          <div class="goal-row">
+            <div class="goal">
+              <i class="ti ti-trending-up"></i>
+              <h4>Stronger retention</h4>
+              <p>More repeat visits, driven by modular, replayable trivia.</p>
+            </div>
+            <div class="goal">
+              <i class="ti ti-clock"></i>
+              <h4>Longer time on platform</h4>
+              <p>Play that keeps users exploring content for longer.</p>
+            </div>
+            <div class="goal">
+              <i class="ti ti-heart"></i>
+              <h4>Deeper content connection</h4>
+              <p>A real bond between users and what they learn.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER BAND ===================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <h2>Design is empathy made visible.</h2>
+      <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+    </div>
+  </footer>
+
+  <script src="../image-slot.js"></script>
+  <script>
+    /* ---------- Image lightbox: click to open fullscreen, scroll/click to zoom, drag to pan ---------- */
+    (function () {
+      const lb = document.createElement("div");
+      lb.className = "lightbox";
+      lb.innerHTML = '<button class="lb-close" aria-label="Close">\u00d7</button>' +
+        '<div class="lb-stage"><img alt=""></div>' +
+        '<div class="lb-hint">Scroll or click to zoom \u00b7 drag to pan \u00b7 Esc to close</div>';
+      document.body.appendChild(lb);
+      const lbImg = lb.querySelector("img");
+      const stage = lb.querySelector(".lb-stage");
+      let scale = 1, tx = 0, ty = 0, dragging = false, sx = 0, sy = 0, moved = false;
+      function apply() { lbImg.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")"; lb.classList.toggle("zoomed", scale > 1.01); }
+      function reset() { scale = 1; tx = 0; ty = 0; apply(); }
+      function open(src) { if (!src) return; lbImg.src = src; reset(); lb.classList.add("open"); document.documentElement.style.overflow = "hidden"; }
+      function close() { lb.classList.remove("open"); document.documentElement.style.overflow = ""; lbImg.src = ""; }
+      lb.querySelector(".lb-close").addEventListener("click", close);
+      lb.addEventListener("click", (e) => { if (e.target === lb || e.target === stage) close(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && lb.classList.contains("open")) close(); });
+      stage.addEventListener("wheel", (e) => { e.preventDefault(); scale = Math.min(6, Math.max(1, scale * (e.deltaY < 0 ? 1.15 : 0.87))); if (scale === 1) { tx = 0; ty = 0; } apply(); }, { passive: false });
+      lbImg.addEventListener("click", (e) => { e.stopPropagation(); if (moved) { moved = false; return; } if (scale > 1.01) reset(); else { scale = 2.4; apply(); } });
+      lbImg.addEventListener("pointerdown", (e) => { if (scale <= 1.01) return; dragging = true; moved = false; sx = e.clientX - tx; sy = e.clientY - ty; lbImg.setPointerCapture(e.pointerId); });
+      lbImg.addEventListener("pointermove", (e) => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; moved = true; apply(); });
+      lbImg.addEventListener("pointerup", () => { dragging = false; });
+      function srcOf(c) {
+        const img = c.querySelector(":scope > img");
+        if (img && img.getAttribute("src")) return img.src;
+        const slot = c.querySelector("image-slot");
+        if (slot) { const si = slot.shadowRoot && slot.shadowRoot.querySelector("img"); if (si && si.src) return si.src; if (slot._userUrl) return slot._userUrl; }
+        return null;
+      }
+      const containers = document.querySelectorAll(".case-hero-media, .ph");
+      containers.forEach((c) => {
+        c.classList.add("zoomable");
+        const btn = document.createElement("button");
+        btn.className = "zoom-btn"; btn.type = "button"; btn.setAttribute("aria-label", "Zoom image");
+        btn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>';
+        c.appendChild(btn);
+        btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); open(srcOf(c)); });
+        const img = c.querySelector(":scope > img");
+        if (img) { img.style.cursor = "zoom-in"; img.addEventListener("click", (e) => { e.preventDefault(); open(img.src); }); }
+      });
+      function refresh() { containers.forEach((c) => c.classList.toggle("has-img", !!srcOf(c))); }
+      refresh(); setInterval(refresh, 1000);
+    })();
+  </script>
+  <script>
+    /* ---------- Back link: point to wherever the user actually came from ---------- */
+    (() => {
+      const link = document.getElementById("back-link");
+      if (!link || !document.referrer) return;
+      try {
+        const ref = new URL(document.referrer);
+        if (ref.origin !== location.origin || ref.pathname === location.pathname) return;
+        let path = ref.pathname.replace(/index\.html$/, "");
+        if (!path.endsWith("/")) path += "/";
+        const names = { "/": "Home", "/work/": "Work", "/about/": "About" };
+        const label = names[path];
+        if (!label) return;
+        link.href = path + ref.hash;
+        link.querySelector(".back-label").textContent = label;
+      } catch (e) {}
+    })();
+  </script>
+  <script>
+    /* ---------- Reveal on scroll: above-the-fold instant, below-fold animates in ---------- */
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const sibs = [...e.target.parentElement.querySelectorAll(":scope > .reveal")];
+            e.target.style.animationDelay = (Math.min(Math.max(sibs.indexOf(e.target), 0), 5) * 60) + "ms";
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        io.observe(el);
+      });
+    }
+
+    /* ---------- Snappy fade-out on internal navigation ---------- */
+    document.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a[href]");
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0 || a.target === "_blank") return;
+      const hrefAttr = a.getAttribute("href") || "";
+      if (hrefAttr.startsWith("#") || hrefAttr.startsWith("mailto:") || hrefAttr.startsWith("http") || hrefAttr.startsWith("javascript:")) return;
+      const url = new URL(a.getAttribute("href"), location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      ev.preventDefault();
+      document.documentElement.classList.add("leaving");
+      setTimeout(() => { location.href = a.href; }, 120);
+    });
+  </script>
+</body>
+</html>

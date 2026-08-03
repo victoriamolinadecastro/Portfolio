@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Victoria Molina de Castro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="../fonts/Defante.ttf?v=2" as="font" type="font/ttf" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  @font-face {
+    font-family: "Defante";
+    src: url("../fonts/Defante.ttf?v=2") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  /* ===== Page transitions (snappy fade between views) ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    body { animation: pageIn 0.22s ease both; }
+  }
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+  html.leaving body { opacity: 0; transition: opacity 0.13s ease; }
+
+  :root {
+    --bg: #FFFFFF;
+    --text: #333333;
+    --text-2: #808080;
+    --border: #B3B3B3;
+    --surface: #F2F2F2;
+    --accent: #FF0534;
+    --footer: #333333;
+
+    --title: "Defante", "Fredoka", system-ui, sans-serif;
+    --body: "Lato", system-ui, sans-serif;
+
+    --page-max: 1100px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --sec: clamp(56px, 8vw, 88px);     /* tight section rhythm */
+    --blob: 63% 37% 44% 56% / 47% 58% 42% 53%;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+  }
+  .nav a {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: var(--text-2);
+    padding: 8px 17px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--text); font-weight: 700; background: #fff; }
+
+  /* ===================== SHARED ===================== */
+  .label-red {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+  }
+  .cta:hover { transform: translateY(-2px) scale(1.02); filter: brightness(0.93); }
+  .cta:active { transform: translateY(0) scale(0.98); }
+  .cta .chev {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 999px;
+    background: #fff; color: var(--accent); font-size: 11px;
+    transition: transform 0.18s ease;
+  }
+  .cta:hover .chev { transform: translateX(4px); }
+
+  /* heading dot + underline accents */
+  .h-dot { color: var(--accent); }
+  .accent-em { color: var(--accent); font-weight: 700; }
+
+  .sec-title {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 40px);
+    letter-spacing: -0.5px;
+    margin: 0 0 20px;
+    line-height: 1.05;
+  }
+  .body-text {
+    font-size: clamp(16.5px, 1.4vw, 19px);
+    line-height: 1.68;
+    color: #474747;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .body-text + .body-text { margin-top: 16px; }
+
+  /* image placeholders inside cards/blocks */
+  .ph {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #dcdcdc;
+  }
+  .ph image-slot {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    transition: transform 0.45s ease;
+  }
+  .ph image-slot::part(button) { border-radius: 0; }
+
+  /* reveal on scroll — resting state VISIBLE */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: revealUp 0.7s ease both; }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero { padding: clamp(116px, 15vh, 168px) 0 var(--sec); }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: clamp(32px, 4.5vw, 56px);
+    align-items: center;
+  }
+  .hero-portrait {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .hero-portrait .blob-bg {
+    position: absolute;
+    inset: 6% -6% -8% 4%;
+    background: var(--surface);
+    border-radius: var(--blob);
+    z-index: 0;
+  }
+  .hero-portrait .red-accent {
+    position: absolute;
+    width: 78px; height: 78px;
+    right: 2%; top: 6%;
+    background: var(--accent);
+    border-radius: 58% 42% 47% 53% / 54% 46% 54% 46%;
+    z-index: 0;
+  }
+  .hero-portrait img {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .hero-copy { position: relative; }
+  .hero-copy h1 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(40px, 5.6vw, 70px);
+    line-height: 1.0;
+    letter-spacing: -0.8px;
+    margin: 14px 0 0;
+  }
+  .hero-underline {
+    width: 64px; height: 5px;
+    background: var(--accent);
+    border-radius: 999px;
+    margin: 18px 0 22px;
+  }
+  .hero-copy .sub {
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.45;
+    color: var(--text);
+    max-width: 30ch;
+    margin: 0 0 26px;
+  }
+  .meta-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .meta-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+  }
+  .meta-chip i { color: var(--accent); font-size: 13px; }
+  /* decorative dots */
+  .dot {
+    position: absolute; border-radius: 50%; background: var(--accent); z-index: 2;
+  }
+  .dot.d1 { width: 10px; height: 10px; top: -6px; left: 2px; }
+  .dot.d2 { width: 7px;  height: 7px;  top: 18px; right: 14%; opacity: .8; }
+  .dot.d3 { width: 13px; height: 13px; bottom: 24%; right: -4px; opacity: .9; }
+
+  /* ===================== ALTERNATING BLOCKS ===================== */
+  .block { padding: var(--sec) 0; }
+  .block-pad { padding-block: calc(var(--sec) * 0.5); }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 4vw, 48px);
+    align-items: center;
+  }
+  .two-col.img-right .col-img { order: 2; }
+
+  /* Who I am — card containing text + image */
+  .card-block {
+    background: var(--surface);
+    border-radius: 26px;
+    padding: clamp(26px, 3.4vw, 44px);
+  }
+  .card-block .ph { background: #d6d6d6; }
+  .col-img.ph { min-height: 320px; height: 100%; }
+
+  /* What I do mini-cards */
+  .mini-row {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 24px;
+  }
+  .mini-card {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    padding: 7px 15px;
+    border-radius: 999px;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+  }
+  .mini-card:hover { opacity: 0.85; }
+
+  /* Where I'm headed — manifesto card (2-col, fills width) */
+  .manifesto {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: clamp(34px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: 0.72fr 1.58fr;
+    gap: clamp(26px, 4vw, 56px);
+    align-items: start;
+  }
+  .manifesto .sec-title { margin-bottom: 16px; }
+  .mani-line {
+    display: block;
+    width: 48px; height: 5px;
+    background: var(--accent);
+    border-radius: 999px;
+  }
+  .manifesto p {
+    font-size: clamp(18px, 1.7vw, 23px);
+    line-height: 1.6;
+    color: #3d3d3d;
+    margin: 0;
+    max-width: 56ch;
+  }
+  .pull {
+    display: block;
+    font-family: var(--title);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: clamp(24px, 2.8vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.4px;
+    margin-top: 18px;
+  }
+
+  /* Beyond the screen — 3 cards */
+  .beyond-head { margin-bottom: 26px; }
+  .beyond-intro {
+    font-size: clamp(16.5px, 1.4vw, 19px);
+    line-height: 1.6; color: #474747;
+    max-width: 60ch; margin: 12px 0 0;
+  }
+  .three-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: clamp(16px, 2vw, 24px);
+    gap: clamp(16px, 2vw, 24px);
+  }
+  .photo-card {
+    cursor: pointer;
+  }
+  .photo-card .ph {
+    border-radius: 22px;
+    height: 300px;
+    background: #d6d6d6;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .photo-card:hover .ph { transform: translateY(-6px); box-shadow: 0 24px 42px -22px rgba(0,0,0,.3); }
+  .photo-card:hover .ph image-slot { transform: scale(1.05); }
+  .photo-card .pc-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 4px 0;
+    font-family: var(--title); font-weight: 600;
+    font-size: clamp(17px, 1.6vw, 20px);
+    letter-spacing: -0.2px;
+  }
+  .photo-card .pc-label i { color: var(--accent); font-size: 16px; }
+
+  /* ===================== FOOTER BAND ===================== */
+  .footer {
+    background: var(--footer);
+    color: #fff;
+    text-align: center;
+    padding: clamp(64px, 9vw, 100px) 0 clamp(72px, 10vw, 108px);
+    margin-top: var(--sec);
+  }
+  .footer h2 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 5.2vw, 66px);
+    line-height: 1.04;
+    letter-spacing: -0.6px;
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 820px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    .hero-portrait { max-width: 320px; }
+    .hero-copy { text-align: center; }
+    .hero-copy .sub { margin-inline: auto; }
+    .hero-underline { margin-inline: auto; }
+    .meta-chips { justify-content: center; }
+    .dot { display: none; }
+  }
+  @media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; }
+    .two-col.img-right .col-img { order: 0; }
+    .col-img.ph { min-height: 240px; }
+    .manifesto { grid-template-columns: 1fr; gap: 18px; }
+    .mani-head { display: flex; align-items: center; gap: 16px; }
+    .manifesto .sec-title { margin-bottom: 0; }
+    .three-grid { grid-template-columns: 1fr; }
+    .photo-card .ph { height: 240px; }
+  }
+  @media (max-width: 600px) {
+    .nav { gap: 2px; padding: 5px 6px; top: 16px; }
+    .nav a { font-size: 13.5px; padding: 7px 13px; }
+  }
+  @media (max-width: 380px) {
+    .nav a { font-size: 12.5px; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/work/">Work</a>
+    <a href="/about/" class="active">About</a>
+    <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+  </nav>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-portrait reveal">
+          <div class="blob-bg"></div>
+          <img src="../assets/profile-opt.webp" alt="Victoria in Patagonia, mountains and lake behind her" />
+        </div>
+        <div class="hero-copy reveal">
+          <div class="label-red">About me</div>
+          <h1>Hi, I’m Victoria.</h1>
+          <div class="hero-underline"></div>
+          <p class="sub">A product designer who cares as much about how things <span class="accent-em">feel</span> as how they work.</p>
+          <div class="meta-chips">
+            <span class="meta-chip"><i class="fa-solid fa-location-dot"></i> Buenos Aires, AR</span>
+            <span class="meta-chip"><i class="fa-solid fa-compass-drafting"></i> Industrial + UX/UI</span>
+            <span class="meta-chip"><i class="fa-solid fa-pen-ruler"></i> Product Designer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHO I AM ===================== -->
+    <section class="block block-pad">
+      <div class="wrap">
+        <div class="card-block reveal">
+          <div class="two-col">
+            <div class="col-text">
+              <h2 class="sec-title">Who I am <span class="h-dot">.</span></h2>
+              <p class="body-text">Hi! I’m Victoria, an Industrial Designer from the University of Buenos Aires with a specialization in UX/UI Design. Throughout my career I’ve focused on creating digital products that bring together function, aesthetics, and a deep understanding of what people really need.</p>
+              <p class="body-text">I grew up in Argentine Patagonia — a place that shaped the way I see the world: an eye for detail, a connection to nature, and a real appreciation for spaces that are simple but meaningful.</p>
+            </div>
+            <div class="col-img ph">
+              <image-slot id="about-patagonia" src="../assets/about-patagonia.webp" placeholder="Drop a Patagonia / landscape photo"></image-slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHAT I DO ===================== -->
+    <section class="block block-pad">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div class="col-img ph">
+            <image-slot id="about-work" src="../assets/about-work.webp" placeholder="Drop a working / process photo"></image-slot>
+          </div>
+          <div class="col-text">
+            <h2 class="sec-title">What I do <span class="h-dot">.</span></h2>
+            <p class="body-text">Today I work as a Product Designer across UX, UI and product strategy. I turn messy, complex problems into clear, intuitive experiences — balancing user needs, business goals and a bit of playful craft. I believe <span class="accent-em">design is empathy made visible</span>: every decision is a small act of caring for the person on the other side of the screen.</p>
+            <div class="mini-row">
+              <div class="mini-card">UX</div>
+              <div class="mini-card">UI</div>
+              <div class="mini-card">Product strategy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHERE I'M HEADED ===================== -->
+    <section class="block block-pad">
+      <div class="wrap">
+        <div class="manifesto reveal">
+          <div class="mani-head">
+            <h2 class="sec-title">Where I’m headed <span class="h-dot">.</span></h2>
+            <span class="mani-line"></span>
+          </div>
+          <div class="mani-body">
+            <p>I want to keep designing products that improve people’s everyday lives — because the real value of design often lives in the small details, not just the big innovations. I do my best work alongside interdisciplinary teams, and I enjoy leading when it’s needed, drawing out the best in people. More than anything, I want to build where the human matters most — where the process is as valued as the result.
+              <span class="pull">Products aren’t just used — they’re felt.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BEYOND THE SCREEN ===================== -->
+    <section class="block block-pad">
+      <div class="wrap">
+        <div class="beyond-head reveal">
+          <h2 class="sec-title">Beyond the screen <span class="h-dot">.</span></h2>
+          <p class="beyond-intro">Outside of work you’ll find me outdoors, behind a camera, or around a table playing strategic board games like Catan, Carcassonne or 7 Wonders.</p>
+        </div>
+        <div class="three-grid reveal">
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-outdoors" src="../assets/about-outdoors.webp" placeholder="Outdoors photo"></image-slot></div>
+          </div>
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-photography" src="../assets/about-photography.webp" placeholder="Photography"></image-slot></div>
+          </div>
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-boardgames" src="../assets/about-boardgames.webp" placeholder="Board games"></image-slot></div>
+          </div>
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-extra1" src="../assets/about-extra1.webp" placeholder="Photo"></image-slot></div>
+          </div>
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-extra2" src="../assets/about-extra2.webp" placeholder="Photo"></image-slot></div>
+          </div>
+          <div class="photo-card">
+            <div class="ph"><image-slot id="about-extra3" src="../assets/about-extra3.webp" placeholder="Photo"></image-slot></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER BAND ===================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <h2>Design is empathy made visible.</h2>
+      <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+    </div>
+  </footer>
+
+  <script src="../image-slot.js"></script>
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const sibs = [...e.target.parentElement.querySelectorAll(":scope > .reveal")];
+            e.target.style.animationDelay = (Math.min(Math.max(sibs.indexOf(e.target), 0), 5) * 70) + "ms";
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        io.observe(el);
+      });
+    }
+
+    /* ---------- Snappy fade-out on internal navigation ---------- */
+    document.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a[href]");
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0 || a.target === "_blank") return;
+      const hrefAttr = a.getAttribute("href") || "";
+      if (hrefAttr.startsWith("#") || hrefAttr.startsWith("mailto:") || hrefAttr.startsWith("http") || hrefAttr.startsWith("javascript:")) return;
+      const url = new URL(a.getAttribute("href"), location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      ev.preventDefault();
+      document.documentElement.classList.add("leaving");
+      setTimeout(() => { location.href = a.href; }, 120);
+    });
+  </script>
+</body>
+</html>

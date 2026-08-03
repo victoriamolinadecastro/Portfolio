@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Victoria Molina de Castro — Product Designer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  /* ===== Defante (uploaded by user). Falls back to Fredoka until the file is present. ===== */
+  @font-face {
+    font-family: "Defante";
+    src: url("fonts/Defante.ttf?v=2") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #FFFFFF;
+    --text: #333333;
+    --text-2: #808080;
+    --border: #B3B3B3;
+    --surface: #F2F2F2;
+    --accent: #FF0534;
+    --footer: #333333;
+
+    --title: "Defante", "Fredoka", system-ui, sans-serif;
+    --body: "Lato", system-ui, sans-serif;
+
+    /* ===== Grid system ===== */
+    --page-max: 1120px;                      /* central content column, desktop cap */
+    --gutter: clamp(20px, 5.5vw, 80px);      /* fluid side margins: mobile → desktop */
+    --section-y: clamp(72px, 11vw, 130px);   /* vertical rhythm between sections */
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+  }
+  .nav a {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: var(--text-2);
+    padding: 8px 17px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--text); font-weight: 700; background: #fff; }
+
+  /* ===================== SHARED ===================== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    line-height: 1;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+  }
+  .cta:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.04); }
+  .cta:active { transform: translateY(0) scale(0.98); }
+  .cta .chev {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  .label-red {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+  }
+
+  /* reveal on scroll — resting state is VISIBLE. The entrance only plays when JS adds .in,
+     so print / PDF / export / no-JS / observer-miss all show content. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: revealUp 0.7s ease both; }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero { padding: clamp(116px, 15vh, 184px) 0 clamp(40px, 6vw, 72px); }
+  .hero-inner { display: block; }
+  .hero-copy { max-width: 800px; }
+  .hero h1 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(36px, 4.9vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.6px;
+    margin: 20px 0 26px;
+    max-width: 13em;
+    text-wrap: balance;
+  }
+  .hero h1 .spark { -webkit-text-fill-color: initial; color: initial; }
+  .hero p {
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: #4d4d4d;
+    max-width: 52ch;
+    margin: 0 0 36px;
+  }
+  .hero-portrait { display: none; }
+
+  /* layout: centered */
+  [data-hero-layout="centered"] .hero-inner { text-align: center; }
+  [data-hero-layout="centered"] .hero h1 { margin-left: auto; margin-right: auto; }
+  [data-hero-layout="centered"] .hero p { margin-left: auto; margin-right: auto; }
+
+  /* layout: split (text + portrait) */
+  [data-hero-layout="split"] .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  [data-hero-layout="split"] .hero-copy { max-width: none; }
+  [data-hero-layout="split"] .hero h1 { font-size: clamp(36px, 4.4vw, 58px); max-width: none; }
+  [data-hero-layout="split"] .hero p { max-width: none; }
+  [data-hero-layout="split"] .hero-portrait {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+  [data-hero-layout="split"] .hero-portrait image-slot {
+    width: 100%; height: 100%;
+    border-radius: 26px;
+  }
+
+  /* type: accent & outline on the highlighted word are applied via inline styles in
+     applyTweaks() (selector targeting on this span proved unreliable in some engines) */
+  .accent-word { transition: color 0.25s ease, -webkit-text-fill-color 0.25s ease, -webkit-text-stroke-color 0.25s ease; }
+
+  /* type: outline (whole headline) */
+  [data-hero-type="outline"] .hero h1 {
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--text);
+  }
+  [data-hero-type="outline"] .hero h1 .spark { -webkit-text-stroke: 0; -webkit-text-fill-color: initial; }
+
+  /* ===================== FEATURED PROJECT ===================== */
+  .projects { padding: 8px 0 0; }
+  .featured {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 26px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .card-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .card-slot::part(button) { border-radius: 0; }
+  img.card-img { object-fit: cover; -webkit-user-drag: none; }
+  .featured .scrim,
+  .mini .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 42%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .card-meta {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    padding: 30px 34px;
+    color: #fff;
+    pointer-events: none;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(26px, 3.6vw, 44px);
+    line-height: 1.04;
+    letter-spacing: -0.3px;
+    transition: transform 0.35s ease;
+  }
+  .featured:hover .card-title,
+  .mini:hover .card-title { transform: translateX(8px); }
+  .card-slot { transition: transform 0.7s ease; }
+  .featured:hover .card-slot,
+  .mini:hover .card-slot { transform: scale(1.05); }
+
+  /* secondary gallery */
+  .gallery {
+    margin-top: var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gutter);
+  }
+  .mini {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .mini .card-meta { padding: 24px; }
+  .mini .card-title { font-size: clamp(20px, 2.4vw, 28px); }
+  .mini .card-tags { margin-bottom: 12px; }
+  .mini .tag { font-size: 9.5px; padding: 5px 10px; letter-spacing: 1.2px; }
+
+  /* ===================== SERVICES ===================== */
+  .section-head {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 4vw, 50px);
+    letter-spacing: -0.4px;
+    margin: 0 0 14px;
+  }
+  .services { padding: var(--section-y) 0 0; }
+  .svc-list { margin-top: 18px; }
+  .svc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 26px 4px;
+    border-top: 1px solid #e6e6e6;
+    cursor: default;
+    transition: padding-left 0.3s ease, color 0.3s ease;
+  }
+  .svc-row:last-child { border-bottom: 1px solid #e6e6e6; }
+  .svc-row .svc-name {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(21px, 2.4vw, 28px);
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+  }
+  .svc-row .svc-arrow {
+    color: var(--border);
+    font-size: 18px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  }
+  .svc-row:hover { padding-left: 18px; color: var(--accent); }
+  .svc-row:hover .svc-arrow { opacity: 1; transform: none; color: var(--accent); }
+
+  /* ===================== TOOLS ===================== */
+  .tools { padding: var(--section-y) 0 var(--section-y); overflow: hidden; }
+  .tools .section-head { margin-bottom: clamp(22px, 3vw, 34px); }
+  .marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .mq-row { display: flex; overflow: hidden; }
+  .mq-track {
+    display: flex;
+    gap: 18px;
+    padding-right: 18px;
+    flex: 0 0 auto;
+    will-change: transform;
+  }
+  .mq-row.r1 .mq-track { animation: marquee 34s linear infinite; }
+  .mq-row.r2 .mq-track { animation: marquee 40s linear infinite reverse; }
+  .tools:hover .mq-track { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mq-row .mq-track { animation: none; }
+  }
+
+  .tool {
+    width: 84px; height: 84px;
+    border-radius: 19px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--body);
+    font-weight: 900;
+    font-size: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tool svg { width: 42px; height: 42px; }
+  .tool i { font-size: 38px; }
+  .tool .mono { font-size: 27px; letter-spacing: -1px; }
+  .tool .mono small { font-weight: 700; }
+
+  /* ===================== FOOTER BAND ===================== */
+  .footer {
+    background: var(--footer);
+    color: #fff;
+    text-align: center;
+    padding: clamp(72px, 11vw, 116px) 0 clamp(80px, 12vw, 120px);
+  }
+  .footer h2 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 5.2vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    margin: 0 0 36px;
+    text-wrap: balance;
+  }
+  .footer .sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 54px;
+  }
+  .footer .socials {
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    font-size: 20px;
+    margin-top: 40px;
+    color: rgba(255,255,255,0.7);
+  }
+  .footer .socials a { transition: color 0.2s ease, transform 0.2s ease; }
+  .footer .socials a:hover { color: var(--accent); transform: translateY(-2px); }
+
+  /* ===================== RESPONSIVE ===================== */
+  /* tablet */
+  @media (max-width: 900px) {
+    .gallery { gap: clamp(16px, 3vw, 24px); }
+    .card-meta { padding: 26px 28px; }
+  }
+  /* mobile */
+  @media (max-width: 640px) {
+    .hero { padding: clamp(104px, 22vw, 132px) 0 var(--section-y); }
+    .hero h1 { max-width: 18ch; }
+    [data-hero-layout="split"] .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    [data-hero-layout="split"] .hero-portrait { max-width: 320px; }
+    .gallery { grid-template-columns: 1fr; gap: 18px; }
+    .featured { aspect-ratio: 4 / 3; }
+    .nav { gap: 2px; padding: 5px 6px; top: 16px; }
+    .nav a { font-size: 13.5px; padding: 7px 13px; }
+    .card-meta { padding: 20px 22px; }
+    .svc-row { padding: 22px 2px; }
+  }
+  /* fine phones */
+  @media (max-width: 380px) {
+    .nav a { font-size: 12.5px; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body data-hero-layout="left" data-hero-type="solid">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" aria-label="Primary">
+    <a href="#top" data-nav="top" class="active">Home</a>
+    <a href="#services" data-nav="services">About</a>
+    <a href="#projects" data-nav="projects">Work</a>
+    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">Linkedin</a>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="label-red reveal">Buenos Aires, AR</div>
+          <h1 class="reveal">Product Designer with roots in <span class="accent-word">Industrial Design</span> <span class="spark">✨</span></h1>
+          <p class="reveal">I blend form, function, and digital fluency to craft seamless experiences—where tangible thinking meets pixel-perfect finesse. Because great design shouldn’t just work… it should feel right.</p>
+          <a href="/contact/" class="cta reveal">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+        </div>
+        <div class="hero-portrait reveal">
+          <image-slot id="vmc-portrait" placeholder="Drop a portrait of Victoria"></image-slot>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section class="projects" id="projects">
+      <div class="wrap">
+        <div class="featured reveal" aria-label="Case study: Gamified Knowledge Retention">
+          <img class="card-slot card-img" id="proj-aventura" src="assets/gamified-portada.webp" alt="Aventura Ábaco — gamified learning app cover" />
+          <div class="scrim"></div>
+          <div class="card-meta">
+            <div class="card-tags">
+              <span class="tag">UX</span>
+              <span class="tag">Wireframing</span>
+              <span class="tag">Prototyping</span>
+              <span class="tag">User Flows</span>
+              <span class="tag">UI</span>
+            </div>
+            <div class="card-title">Gamified Knowledge Retention</div>
+          </div>
+        </div>
+
+        <div class="gallery">
+          <div class="mini reveal" aria-label="Project">
+            <image-slot class="card-slot" id="proj-mini-left" placeholder="Drop a secondary mockup"></image-slot>
+            <div class="scrim"></div>
+            <div class="card-meta">
+              <div class="card-tags">
+                <span class="tag">UI</span>
+                <span class="tag">UX</span>
+                <span class="tag">Product Design</span>
+              </div>
+              <div class="card-title">Reshaping Kibit</div>
+            </div>
+          </div>
+          <div class="mini reveal" aria-label="Project">
+            <image-slot class="card-slot" id="proj-mini-right" placeholder="Drop the second project render"></image-slot>
+            <div class="scrim"></div>
+            <div class="card-meta">
+              <div class="card-tags">
+                <span class="tag">UI</span>
+                <span class="tag">UX</span>
+                <span class="tag">UX Research</span>
+              </div>
+              <div class="card-title">Humanizing Digital Dating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section class="services" id="services">
+      <div class="wrap">
+        <h2 class="section-head reveal">Services</h2>
+        <div class="svc-list reveal">
+          <div class="svc-row"><span class="svc-name">Product design</span><span class="svc-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+          <div class="svc-row"><span class="svc-name">Ux / Ui</span><span class="svc-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+          <div class="svc-row"><span class="svc-name">Product operations</span><span class="svc-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+          <div class="svc-row"><span class="svc-name">Design systems</span><span class="svc-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+          <div class="svc-row"><span class="svc-name">Branding</span><span class="svc-arrow"><i class="fa-solid fa-arrow-right"></i></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOOLS ===================== -->
+    <section class="tools" id="tools">
+      <div class="wrap">
+        <h2 class="section-head reveal">Tools</h2>
+      </div>
+      <div class="marquee reveal">
+        <div class="mq-row r1"><div class="mq-track" id="mq-1"></div></div>
+        <div class="mq-row r2"><div class="mq-track" id="mq-2"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER BAND ===================== -->
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <h2>Let’s start creating together!</h2>
+      <a href="/contact/" class="cta">Contact me! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+      <div class="sub">© <span id="yr"></span> Victoria Molina de Castro — All rights reserved.</div>
+    </div>
+  </footer>
+
+  <div id="tweaks-root"></div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="image-slot.js"></script>
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    /* ---------- Tools marquee ---------- */
+    // Each tile: either a 2-letter Adobe-style monogram, an inline brand SVG, or a Font Awesome glyph.
+    const TOOLS = [
+      { type: "html5" },
+      { type: "mono", txt: "Id", bg: "#2B0014", fg: "#FF3366" },
+      { type: "mono", txt: "Ai", bg: "#330E00", fg: "#FF9A00" },
+      { type: "trello" },
+      { type: "mono", txt: "Xd", bg: "#2E001F", fg: "#FF61F6" },
+      { type: "figma" },
+      { type: "ga" },
+      { type: "sketch" },
+      { type: "mono", txt: "Ps", bg: "#001E36", fg: "#31A8FF" },
+      { type: "slack" },
+      { type: "mono", txt: "Lr", bg: "#001E36", fg: "#31A8FF" },
+      { type: "mono", txt: "Pr", bg: "#00005B", fg: "#9999FF" },
+      { type: "wordpress" },
+      { type: "openai" },
+      { type: "mono", txt: "Ac", bg: "#240000", fg: "#FF2D2D" }
+    ];
+
+    const SVGS = {
+      figma: { bg: "#1E1E1E", svg:
+        '<svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="#0ACF83" d="M9.5 57c5.2 0 9.5-4.25 9.5-9.5V38H9.5C4.3 38 0 42.25 0 47.5S4.3 57 9.5 57z"/>' +
+        '<path fill="#A259FF" d="M0 28.5C0 23.25 4.3 19 9.5 19H19v19H9.5C4.3 38 0 33.75 0 28.5z"/>' +
+        '<path fill="#F24E1E" d="M0 9.5C0 4.25 4.3 0 9.5 0H19v19H9.5C4.3 19 0 14.75 0 9.5z"/>' +
+        '<path fill="#FF7262" d="M19 0h9.5C33.7 0 38 4.25 38 9.5S33.7 19 28.5 19H19V0z"/>' +
+        '<path fill="#1ABCFE" d="M38 28.5c0 5.25-4.3 9.5-9.5 9.5S19 33.75 19 28.5s4.3-9.5 9.5-9.5 9.5 4.25 9.5 9.5z"/>' +
+        '</svg>' },
+      ga: { bg: "#0F0F0F", svg:
+        '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect x="44" y="8" width="14" height="48" rx="7" fill="#F9AB00"/>' +
+        '<rect x="25" y="24" width="14" height="32" rx="7" fill="#E37400"/>' +
+        '<circle cx="13" cy="49" r="7.5" fill="#E37400"/>' +
+        '</svg>' },
+      sketch: { bg: "#1B1B1B", svg:
+        '<svg viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="#FDB300" d="M14 4 32 2l18 2 12 16-30 36L2 20z"/>' +
+        '<path fill="#EA6C00" d="M14 20h36L32 56z"/>' +
+        '<path fill="#FDAD00" d="M14 20H2l30 36zM50 20h12L32 56z"/>' +
+        '<path fill="#FDD231" d="M14 20h36L32 4z"/>' +
+        '<path fill="#FDAD00" d="M14 4 2 20h12zM50 4l12 16H50z"/>' +
+        '<path fill="#FEEEB7" d="M32 2 14 4l18 16L50 4z"/>' +
+        '</svg>' },
+      openai: { bg: "#0E8C6E", svg:
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#fff">' +
+        '<path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.5-2.9A5.98 5.98 0 0 0 4.98 4.18a5.99 5.99 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.9 6.05 6.05 0 0 0 6.51 2.9A5.97 5.97 0 0 0 13.26 22a6.05 6.05 0 0 0 5.77-4.19 5.99 5.99 0 0 0 4-2.9 6.05 6.05 0 0 0-.75-7.1zM13.26 20.6a4.48 4.48 0 0 1-2.88-1.04l3.6-2.08a.6.6 0 0 0 .3-.51v-5.08l1.52.88v4.2a4.5 4.5 0 0 1-2.54 3.63zM5.6 17.5a4.48 4.48 0 0 1-.54-3.02l3.6 2.08a.6.6 0 0 0 .59 0l4.4-2.54v1.76l-3.65 2.1a4.5 4.5 0 0 1-4.4-.38zM4.3 7.9a4.48 4.48 0 0 1 2.34-1.97v4.24a.6.6 0 0 0 .3.52l4.4 2.53-1.52.88-3.65-2.1A4.5 4.5 0 0 1 4.3 7.9zM17.9 11.1l-4.4-2.54 1.52-.88 3.65 2.1a4.5 4.5 0 0 1-.68 8.12V13.7a.6.6 0 0 0-.3-.52zM19.4 8.84l-3.6-2.08a.6.6 0 0 0-.6 0l-4.4 2.54V7.54l3.65-2.1a4.5 4.5 0 0 1 6.68 4.66zM9.98 11.96 8.46 11.1V6.9a4.5 4.5 0 0 1 7.38-3.46l-3.6 2.08a.6.6 0 0 0-.3.51v5.93zm.82-1.78L12 9.48l1.2.7v1.4l-1.2.7-1.2-.7z"/>' +
+        '</svg>' },
+      html5: { bg: "#E44D26", svg:
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#fff">' +
+        '<path d="M3 2l1.6 18L12 22l7.4-2L21 2H3zm14.3 5H8.2l.2 2.2h8.7l-.55 6.3-4.35 1.2-4.35-1.2-.3-3.35h2.13l.15 1.66 2.37.64 2.37-.64.26-2.86H7.05L6.5 4.8h11.04l-.24 2.2z"/>' +
+        '</svg>' },
+      trello: { bg: "#0079BF", svg:
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect x="3" y="3" width="18" height="18" rx="3.4" fill="#fff"/>' +
+        '<rect x="5.6" y="5.6" width="5" height="11.2" rx="1.2" fill="#0079BF"/>' +
+        '<rect x="13.4" y="5.6" width="5" height="7" rx="1.2" fill="#0079BF"/>' +
+        '</svg>' },
+      slack: { bg: "#1E1E1E", svg:
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect x="10.4" y="1.8" width="3.1" height="7.2" rx="1.55" fill="#36C5F0"/>' +
+        '<rect x="15" y="10.4" width="7.2" height="3.1" rx="1.55" fill="#2EB67D"/>' +
+        '<rect x="10.4" y="15" width="3.1" height="7.2" rx="1.55" fill="#ECB22E"/>' +
+        '<rect x="1.8" y="10.4" width="7.2" height="3.1" rx="1.55" fill="#E01E5A"/>' +
+        '</svg>' },
+      wordpress: { bg: "#21759B", svg:
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">' +
+        '<circle cx="12" cy="12" r="10.4" stroke="#fff" stroke-width="1.3"/>' +
+        '<path fill="#fff" d="M3.6 12c0-1.2.26-2.35.72-3.38L8.27 19.2C5.5 17.85 3.6 15.15 3.6 12zm8.4 8.4c-.83 0-1.62-.12-2.38-.34l2.52-7.33 2.58 7.07.06.14c-.86.3-1.78.46-2.78.46zm1.16-12.34c.5-.03.96-.08.96-.08.45-.05.4-.71-.05-.69 0 0-1.36.11-2.24.11-.82 0-2.2-.11-2.2-.11-.46-.02-.51.66-.06.69 0 0 .42.05.87.08l1.3 3.56-1.83 5.48L6.04 8.06c.5-.03.96-.08.96-.08.45-.05.4-.71-.06-.69 0 0-1.35.11-2.23.11l-.53-.01A8.38 8.38 0 0 1 12 3.6c2.2 0 4.2.84 5.7 2.22l-.14-.01c-.83 0-1.42.72-1.42 1.5 0 .7.4 1.28.83 1.98.32.56.7 1.28.7 2.32 0 .72-.28 1.55-.64 2.72l-.84 2.8-3.03-9.01zm5.93 1.07a8.4 8.4 0 0 1-2.2 9.94l2.57-7.43c.48-1.2.64-2.16.64-3.01 0-.31-.02-.6-.06-.87.5.9.78 1.93.78 3.02 0-.55-.16-1.2-.49-1.9z"/>' +
+        '</svg>' },
+    };
+
+    function tileHTML(t) {
+      if (t.type === "fa") {
+        return `<div class="tool" style="background:${t.bg};color:${t.fg}"><i class="${t.icon}"></i></div>`;
+      }
+      if (t.type === "mono") {
+        return `<div class="tool" style="background:${t.bg};color:${t.fg}"><span class="mono">${t.txt}</span></div>`;
+      }
+      const s = SVGS[t.type];
+      return `<div class="tool" style="background:${s.bg}">${s.svg}</div>`;
+    }
+
+    function fillTrack(id, items) {
+      const html = items.map(tileHTML).join("");
+      // duplicate the set so the -50% translate loops seamlessly
+      document.getElementById(id).innerHTML = html + html;
+    }
+    const half = Math.ceil(TOOLS.length / 2);
+    fillTrack("mq-1", TOOLS.slice(0, half));
+    fillTrack("mq-2", TOOLS.slice(half));
+
+    /* ---------- Reveal on scroll (progressive enhancement; resting state already visible) ---------- */
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const sibs = [...e.target.parentElement.querySelectorAll(":scope > .reveal")];
+            e.target.style.animationDelay = (Math.min(sibs.indexOf(e.target), 5) * 60) + "ms";
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    }
+
+    /* ---------- Nav: Home is the current page, so it stays active.
+       (About / Work become their own pages later — wire their active state then.) ---------- */
+
+    /* ---------- tweak application: single source of truth, shared with the Tweaks panel ---------- */
+    function applyTweaks(t) {
+      t = t || {};
+      const accent = t.accent || "#FF0534";
+      const type = t.heroType || "solid";
+      document.body.dataset.heroLayout = t.heroLayout || "left";
+      document.body.dataset.heroType = type;
+      document.documentElement.style.setProperty("--accent", accent);
+      document.querySelectorAll(".accent-word").forEach((el) => {
+        if (type === "accent" || type === "outline") {
+          el.style.color = accent;
+          el.style.webkitTextFillColor = accent;
+          el.style.webkitTextStroke = "";
+        } else {
+          el.style.color = "";
+          el.style.webkitTextFillColor = "";
+          el.style.webkitTextStroke = "";
+        }
+      });
+    }
+    window.applyTweaks = applyTweaks;
+    try {
+      applyTweaks(JSON.parse(localStorage.getItem("vmc-tweaks") || "{}"));
+    } catch (e) { applyTweaks({}); }
+  </script>
+
+  <!-- Tweaks panel (React island) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const SAVED = (() => { try { return JSON.parse(localStorage.getItem("vmc-tweaks") || "{}"); } catch (e) { return {}; } })();
+    const TWEAK_DEFAULTS = {
+      heroLayout: SAVED.heroLayout || "left",
+      heroType: SAVED.heroType || "solid",
+      accent: SAVED.accent || "#FF0534"
+    };
+
+    function TweaksApp() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        window.applyTweaks(t);
+        try { localStorage.setItem("vmc-tweaks", JSON.stringify(t)); } catch (e) {}
+      }, [t.heroLayout, t.heroType, t.accent]);
+
+      return (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Hero layout" />
+          <TweakRadio
+            label="Composition"
+            value={t.heroLayout}
+            options={[
+              { value: "left", label: "Left" },
+              { value: "centered", label: "Centered" },
+              { value: "split", label: "Split" }
+            ]}
+            onChange={(v) => setTweak("heroLayout", v)}
+          />
+          <TweakSection label="Headline treatment" />
+          <TweakRadio
+            label="Type"
+            value={t.heroType}
+            options={[
+              { value: "solid", label: "Solid" },
+              { value: "accent", label: "Accent" },
+              { value: "outline", label: "Outline" }
+            ]}
+            onChange={(v) => setTweak("heroType", v)}
+          />
+          <TweakSection label="Brand" />
+          <TweakColor
+            label="Accent"
+            value={t.accent}
+            options={["#FF0534", "#E11D48", "#F03E3E", "#FF2D55"]}
+            onChange={(v) => setTweak("accent", v)}
+          />
+        </TweaksPanel>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("tweaks-root")).render(<TweaksApp />);
+  </script>
+<script>
+(async () => {
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  @page { margin: 0.5cm; }\n  html, body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }\n  section, article, figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

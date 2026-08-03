@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Victoria Molina de Castro — Product Designer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="fonts/Defante.ttf?v=2" as="font" type="font/ttf" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  /* ===== Defante (uploaded by user). Falls back to Fredoka until the file is present. ===== */
+  @font-face {
+    font-family: "Defante";
+    src: url("fonts/Defante.ttf?v=2") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  /* ===== Page transitions (snappy fade between views) ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    body { animation: pageIn 0.22s ease both; }
+  }
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+  html.leaving body { opacity: 0; transition: opacity 0.13s ease; }
+
+  :root {
+    --bg: #FFFFFF;
+    --text: #333333;
+    --text-2: #808080;
+    --border: #B3B3B3;
+    --surface: #F2F2F2;
+    --accent: #FF0534;
+    --footer: #333333;
+
+    --title: "Defante", "Fredoka", system-ui, sans-serif;
+    --body: "Lato", system-ui, sans-serif;
+
+    /* ===== Grid system ===== */
+    --page-max: 1120px;                      /* central content column, desktop cap */
+    --gutter: clamp(20px, 5.5vw, 80px);      /* fluid side margins: mobile → desktop */
+    --section-y: clamp(72px, 11vw, 130px);   /* vertical rhythm between sections */
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+  }
+  .nav a {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: var(--text-2);
+    padding: 8px 17px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--text); font-weight: 700; background: #fff; }
+
+  /* ===================== SHARED ===================== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    line-height: 1;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+  }
+  .cta:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.04); }
+  .cta:active { transform: translateY(0) scale(0.98); }
+  .cta .chev {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  .label-red {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+  }
+
+  /* reveal on scroll — resting state is VISIBLE. The entrance only plays when JS adds .in,
+     so print / PDF / export / no-JS / observer-miss all show content. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: revealUp 0.7s ease both; }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero { padding: clamp(116px, 15vh, 184px) 0 clamp(40px, 6vw, 72px); }
+  .hero-inner { display: block; }
+  .hero-copy { max-width: 800px; }
+  .hero h1 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(36px, 4.9vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.6px;
+    margin: 20px 0 26px;
+    max-width: 13em;
+    text-wrap: balance;
+  }
+  .hero h1 .spark { -webkit-text-fill-color: initial; color: initial; }
+  .hero p {
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: #4d4d4d;
+    max-width: 52ch;
+    margin: 0 0 36px;
+  }
+  .hero-portrait { display: none; }
+
+  /* layout: centered */
+  [data-hero-layout="centered"] .hero-inner { text-align: center; }
+  [data-hero-layout="centered"] .hero h1 { margin-left: auto; margin-right: auto; }
+  [data-hero-layout="centered"] .hero p { margin-left: auto; margin-right: auto; }
+
+  /* layout: split (text + portrait) */
+  [data-hero-layout="split"] .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  [data-hero-layout="split"] .hero-copy { max-width: none; }
+  [data-hero-layout="split"] .hero h1 { font-size: clamp(36px, 4.4vw, 58px); max-width: none; }
+  [data-hero-layout="split"] .hero p { max-width: none; }
+  [data-hero-layout="split"] .hero-portrait {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+  [data-hero-layout="split"] .hero-portrait image-slot {
+    width: 100%; height: 100%;
+    border-radius: 26px;
+  }
+
+  /* type: accent & outline on the highlighted word are applied via inline styles in
+     applyTweaks() (selector targeting on this span proved unreliable in some engines) */
+  .accent-word { transition: color 0.25s ease, -webkit-text-fill-color 0.25s ease, -webkit-text-stroke-color 0.25s ease; }
+
+  /* type: outline (whole headline) */
+  [data-hero-type="outline"] .hero h1 {
+    color: transparent;
+    -webkit-text-stroke: 1.4px var(--text);
+  }
+  [data-hero-type="outline"] .hero h1 .spark { -webkit-text-stroke: 0; -webkit-text-fill-color: initial; }
+
+  /* ===================== FEATURED PROJECT ===================== */
+  .projects { padding: 8px 0 0; }
+  .featured {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 26px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .card-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .card-slot::part(button) { border-radius: 0; }
+  img.card-img { object-fit: cover; -webkit-user-drag: none; }
+  .featured .scrim,
+  .mini .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 42%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .card-meta {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    padding: 30px 34px;
+    color: #fff;
+    pointer-events: none;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(26px, 3.6vw, 44px);
+    line-height: 1.04;
+    letter-spacing: -0.3px;
+    transition: transform 0.35s ease;
+  }
+  .featured:hover .card-title,
+  .mini:hover .card-title { transform: translateX(8px); }
+  .card-slot { transition: transform 0.7s ease; }
+  .featured:hover .card-slot,
+  .mini:hover .card-slot { transform: scale(1.05); }
+
+  /* secondary gallery */
+  .gallery {
+    margin-top: var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gutter);
+  }
+  .see-more {
+    text-align: center;
+    margin-top: clamp(28px, 4vw, 44px);
+  }
+  .see-more a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    transition: color 0.2s ease, gap 0.2s ease;
+  }
+  .see-more a:hover { color: var(--accent); gap: 14px; }
+  .see-more .chev {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .mini {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .mini .card-meta { padding: 24px; }
+  .mini .card-title { font-size: clamp(20px, 2.4vw, 28px); }
+  .mini .card-tags { margin-bottom: 12px; }
+  .mini .tag { font-size: 9.5px; padding: 5px 10px; letter-spacing: 1.2px; }
+
+  /* ===================== SERVICES ===================== */
+  .section-head {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 4vw, 50px);
+    letter-spacing: -0.4px;
+    margin: 0 0 14px;
+  }
+  .services { padding: var(--section-y) 0 0; }
+  .svc-list { margin-top: 18px; }
+  .svc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 26px 4px;
+    border-top: 1px solid #e6e6e6;
+    cursor: default;
+    transition: padding-left 0.3s ease, color 0.3s ease;
+  }
+  .svc-row:last-child { border-bottom: 1px solid #e6e6e6; }
+  .svc-row .svc-name {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(21px, 2.4vw, 28px);
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+  }
+  .svc-row .svc-arrow {
+    color: var(--border);
+    font-size: 18px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  }
+  .svc-row:hover { padding-left: 18px; color: var(--accent); }
+  .svc-row:hover .svc-arrow { opacity: 1; transform: none; color: var(--accent); }
+
+  /* ===================== TOOLS ===================== */
+  .tools { padding: var(--section-y) 0 var(--section-y); overflow: hidden; }
+  .tools .section-head { margin-bottom: clamp(22px, 3vw, 34px); }
+  .marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .mq-row { display: flex; overflow: hidden; }
+  .mq-track {
+    display: flex;
+    gap: 18px;
+    padding-right: 18px;
+    flex: 0 0 auto;
+    will-change: transform;
+  }
+  .mq-row.r1 .mq-track { animation: marquee 34s linear infinite; animation-delay: -11s; }
+  .mq-row.r2 .mq-track { animation: marquee 40s linear infinite reverse; animation-delay: -27s; }
+  .tools:hover .mq-track { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mq-row .mq-track { animation: none; }
+  }
+
+  .tool {
+    width: 112px; height: 112px;
+    border-radius: 25px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--body);
+    font-weight: 900;
+    font-size: 26px;
+    overflow: hidden;
+    position: relative;
+    background: var(--surface);
+  }
+  .tool image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tool image-slot::part(button) { border-radius: 0; font-size: 0; }
+  .tool-tip {
+    position: absolute;
+    bottom: calc(100% + 9px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--text);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+    padding: 6px 11px;
+    border-radius: 999px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 5;
+  }
+  .tool:hover .tool-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .tool svg { width: 42px; height: 42px; }
+  .tool i { font-size: 38px; }
+  .tool .mono { font-size: 27px; letter-spacing: -1px; }
+  .tool .mono small { font-weight: 700; }
+
+  /* ===================== FOOTER BAND ===================== */
+  .footer {
+    background: var(--footer);
+    color: #fff;
+    text-align: center;
+    padding: clamp(72px, 11vw, 116px) 0 clamp(80px, 12vw, 120px);
+  }
+  .footer h2 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 5.2vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    margin: 0 0 36px;
+    text-wrap: balance;
+  }
+  .footer .sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 54px;
+  }
+  .footer .socials {
+    display: flex;
+    gap: 22px;
+    justify-content: center;
+    font-size: 20px;
+    margin-top: 40px;
+    color: rgba(255,255,255,0.7);
+  }
+  .footer .socials a { transition: color 0.2s ease, transform 0.2s ease; }
+  .footer .socials a:hover { color: var(--accent); transform: translateY(-2px); }
+
+  /* ===================== RESPONSIVE ===================== */
+  /* tablet */
+  @media (max-width: 900px) {
+    .gallery { gap: clamp(16px, 3vw, 24px); }
+    .card-meta { padding: 26px 28px; }
+  }
+  /* mobile */
+  @media (max-width: 640px) {
+    .hero { padding: clamp(104px, 22vw, 132px) 0 var(--section-y); }
+    .hero h1 { max-width: 18ch; }
+    [data-hero-layout="split"] .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    [data-hero-layout="split"] .hero-portrait { max-width: 320px; }
+    .gallery { grid-template-columns: 1fr; gap: 18px; }
+    .featured { aspect-ratio: 4 / 3; }
+    .nav { gap: 2px; padding: 5px 6px; top: 16px; }
+    .nav a { font-size: 13.5px; padding: 7px 13px; }
+    .card-meta { padding: 20px 22px; }
+    .svc-row { padding: 22px 2px; }
+    .tool { width: 68px; height: 68px; border-radius: 16px; }
+    .marquee { gap: 10px; }
+    .mq-track { gap: 10px; padding-right: 10px; }
+  }
+  /* fine phones */
+  @media (max-width: 380px) {
+    .nav a { font-size: 12.5px; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body data-hero-layout="left" data-hero-type="solid">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" aria-label="Primary">
+    <a href="#top" data-nav="top" class="active">Home</a>
+    <a href="/work/">Work</a>
+    <a href="/about/">About</a>
+    <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="label-red reveal" style="font-size: 20px">Buenos Aires, AR</div>
+          <h1 class="reveal">Product Designer with roots in <span class="accent-word">Industrial Design</span> <span class="spark">✨</span></h1>
+          <p class="reveal">I blend form, function, and digital fluency to craft seamless experiences, where tangible thinking meets pixel-perfect finesse. Because great design shouldn’t just work… it should feel right.</p>
+          <a href="/contact/" class="cta reveal">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+        </div>
+        <div class="hero-portrait reveal">
+          <image-slot id="vmc-portrait" placeholder="Drop a portrait of Victoria"></image-slot>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section class="projects" id="projects">
+      <div class="wrap">
+        <a class="featured reveal" href="/aventura/" aria-label="Case study: Gamified Knowledge Retention">
+          <img class="card-slot card-img" id="proj-aventura" src="assets/gamified-portada.webp" alt="Aventura Ábaco — gamified learning app cover" />
+          <div class="scrim"></div>
+          <div class="card-meta">
+            <div class="card-tags">
+              <span class="tag">UX</span>
+              <span class="tag">Wireframing</span>
+              <span class="tag">Prototyping</span>
+              <span class="tag">User Flows</span>
+              <span class="tag">UI</span>
+            </div>
+            <div class="card-title">Gamified Knowledge Retention</div>
+          </div>
+        </a>
+
+        <div class="gallery">
+          <a class="mini reveal" href="/kibitreboot/" aria-label="Case study: The Emotional Reboot">
+            <image-slot class="card-slot" id="work-3" src="assets/work-3.webp" placeholder="Drop the Emotional Reboot cover"></image-slot>
+            <div class="scrim"></div>
+            <div class="card-meta">
+              <div class="card-tags">
+                <span class="tag">UX / UI / Redesign</span>
+              </div>
+              <div class="card-title">The Emotional Reboot</div>
+            </div>
+          </a>
+          <a class="mini reveal" href="/kibitanalytics/" aria-label="Case study: Making Data Legible">
+            <image-slot class="card-slot" id="work-8" src="assets/work-8.webp" placeholder="Drop the analytics platform cover"></image-slot>
+            <div class="scrim"></div>
+            <div class="card-meta">
+              <div class="card-tags">
+                <span class="tag">UX / UI / Data</span>
+              </div>
+              <div class="card-title">Making Data Legible</div>
+            </div>
+          </a>
+        </div>
+        <div class="see-more reveal">
+          <a href="/work/">See other work <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section class="services" id="services">
+      <div class="wrap">
+        <h2 class="section-head reveal">Services</h2>
+        <div class="svc-list reveal">
+          <div class="svc-row"><span class="svc-name">Product design</span></div>
+          <div class="svc-row"><span class="svc-name">Ux / Ui</span></div>
+          <div class="svc-row"><span class="svc-name">Product operations</span></div>
+          <div class="svc-row"><span class="svc-name">Design systems</span></div>
+          <div class="svc-row"><span class="svc-name">Branding</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOOLS ===================== -->
+    <section class="tools" id="tools">
+      <div class="wrap">
+        <h2 class="section-head reveal">Tools</h2>
+      </div>
+      <div class="marquee reveal">
+        <div class="mq-row r1"><div class="mq-track" id="mq-1"></div></div>
+        <div class="mq-row r2"><div class="mq-track" id="mq-2"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER BAND ===================== -->
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <h2>Let’s start creating together!</h2>
+      <a href="/contact/" class="cta">Contact me! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+      <div class="sub">© <span id="yr"></span> Victoria Molina de Castro — All rights reserved.</div>
+    </div>
+  </footer>
+
+  <div id="tweaks-root"></div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="image-slot.js"></script>
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    /* ---------- Tools marquee ---------- */
+    // Each tile: either a 2-letter Adobe-style monogram, an inline brand SVG, or a Font Awesome glyph.
+    const TOOLS = [
+      { name: "Acrobat", slug: "acrobat" },
+      { name: "InDesign", slug: "indesign" },
+      { name: "Lightroom", slug: "lightroom" },
+      { name: "Photoshop", slug: "photoshop" },
+      { name: "Adobe XD", slug: "xd" },
+      { name: "TestFlight", slug: "testflight" },
+      { name: "ChatGPT", slug: "chatgpt" },
+      { name: "Claude", slug: "claude" },
+      { name: "Figma", slug: "figma" },
+      { name: "Illustrator", slug: "illustrator" },
+      { name: "Gemini", slug: "gemini" },
+      { name: "Gmail", slug: "gmail" },
+      { name: "Google AI Studio", slug: "googleaistudio" },
+      { name: "Google Analytics", slug: "googleanalytics" },
+      { name: "HTML5", slug: "html5" },
+      { name: "RevenueCat", slug: "revenuecat" },
+      { name: "Slack", slug: "slack" },
+      { name: "Trello", slug: "trello" },
+      { name: "WordPress", slug: "wordpress" }
+    ];
+
+    function tileHTML(t, dup) {
+      const id = "tool-" + t.slug + (dup ? "-b" : "");
+      return `<div class="tool"><image-slot id="${id}" src="assets/tool-${t.slug}.webp" placeholder="${t.name}"></image-slot><span class="tool-tip">${t.name}</span></div>`;
+    }
+
+    function fillTrack(id, items) {
+      const html = items.map((t) => tileHTML(t, false)).join("");
+      const htmlDup = items.map((t) => tileHTML(t, true)).join("");
+      // duplicate the set so the -50% translate loops seamlessly
+      document.getElementById(id).innerHTML = html + htmlDup;
+    }
+
+    const half = Math.ceil(TOOLS.length / 2);
+    const row1 = TOOLS.filter((_, i) => i % 2 === 0);
+    const row2 = TOOLS.filter((_, i) => i % 2 === 1);
+    fillTrack("mq-1", row1);
+    fillTrack("mq-2", row2);
+
+    /* ---------- Reveal on scroll: above-the-fold shows instantly, only below-fold animates in ---------- */
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const sibs = [...e.target.parentElement.querySelectorAll(":scope > .reveal")];
+            e.target.style.animationDelay = (Math.min(sibs.indexOf(e.target), 5) * 60) + "ms";
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return; // already visible → no entrance
+        io.observe(el);
+      });
+    }
+
+    /* ---------- Snappy fade-out on internal navigation (Home/About/Work) ---------- */
+    document.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a[href]");
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0 || a.target === "_blank") return;
+      const hrefAttr = a.getAttribute("href") || "";
+      if (hrefAttr.startsWith("#") || hrefAttr.startsWith("mailto:") || hrefAttr.startsWith("http") || hrefAttr.startsWith("javascript:")) return;
+      const url = new URL(a.getAttribute("href"), location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      ev.preventDefault();
+      document.documentElement.classList.add("leaving");
+      setTimeout(() => { location.href = a.href; }, 120);
+    });
+
+    /* ---------- Nav: Home is the current page, so it stays active.
+       (About / Work become their own pages later — wire their active state then.) ---------- */
+
+    /* ---------- tweak application: single source of truth, shared with the Tweaks panel ---------- */
+    function applyTweaks(t) {
+      t = t || {};
+      const accent = t.accent || "#FF0534";
+      const type = t.heroType || "solid";
+      document.body.dataset.heroLayout = t.heroLayout || "left";
+      document.body.dataset.heroType = type;
+      document.documentElement.style.setProperty("--accent", accent);
+      document.querySelectorAll(".accent-word").forEach((el) => {
+        if (type === "accent" || type === "outline") {
+          el.style.color = accent;
+          el.style.webkitTextFillColor = accent;
+          el.style.webkitTextStroke = "";
+        } else {
+          el.style.color = "";
+          el.style.webkitTextFillColor = "";
+          el.style.webkitTextStroke = "";
+        }
+      });
+    }
+    window.applyTweaks = applyTweaks;
+    try {
+      applyTweaks(JSON.parse(localStorage.getItem("vmc-tweaks") || "{}"));
+    } catch (e) { applyTweaks({}); }
+  </script>
+
+  <!-- Tweaks panel (React island) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const SAVED = (() => { try { return JSON.parse(localStorage.getItem("vmc-tweaks") || "{}"); } catch (e) { return {}; } })();
+    const TWEAK_DEFAULTS = {
+      heroLayout: SAVED.heroLayout || "left",
+      heroType: SAVED.heroType || "solid",
+      accent: SAVED.accent || "#FF0534"
+    };
+
+    function TweaksApp() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        window.applyTweaks(t);
+        try { localStorage.setItem("vmc-tweaks", JSON.stringify(t)); } catch (e) {}
+      }, [t.heroLayout, t.heroType, t.accent]);
+
+      return (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Hero layout" />
+          <TweakRadio
+            label="Composition"
+            value={t.heroLayout}
+            options={[
+              { value: "left", label: "Left" },
+              { value: "centered", label: "Centered" },
+              { value: "split", label: "Split" }
+            ]}
+            onChange={(v) => setTweak("heroLayout", v)}
+          />
+          <TweakSection label="Headline treatment" />
+          <TweakRadio
+            label="Type"
+            value={t.heroType}
+            options={[
+              { value: "solid", label: "Solid" },
+              { value: "accent", label: "Accent" },
+              { value: "outline", label: "Outline" }
+            ]}
+            onChange={(v) => setTweak("heroType", v)}
+          />
+          <TweakSection label="Brand" />
+          <TweakColor
+            label="Accent"
+            value={t.accent}
+            options={["#FF0534", "#E11D48", "#F03E3E", "#FF2D55"]}
+            onChange={(v) => setTweak("accent", v)}
+          />
+        </TweaksPanel>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("tweaks-root")).render(<TweaksApp />);
+  </script>
+</body>
+</html>
