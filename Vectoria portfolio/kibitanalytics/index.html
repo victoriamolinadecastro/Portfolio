@@ -470,6 +470,13 @@
   @media (max-width: 380px) {
     .nav a { font-size: 12.5px; padding: 6px 10px; }
   }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -480,9 +487,11 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
+
     <!-- ===================== CASE HERO ===================== -->
     <section class="case-hero">
       <div class="case-hero-media reveal">
@@ -491,17 +500,29 @@
       <div class="wrap case-hero-copy">
         <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
         <div class="card-tags reveal">
-          <span class="tag">UX / UI</span>
-          <span class="tag">Product Design</span>
-          <span class="tag">Data &amp; Analytics</span>
+          <span class="tag">Analytics</span>
+          <span class="tag">KPIs</span>
+          <span class="tag">Data viz</span>
         </div>
         <h1 class="reveal">Making Data Legible</h1>
-        <p class="lead reveal">Designing an analytics platform from zero — from the first metric to the weekly report Kibit's team runs on.</p>
+        <p class="lead reveal">An analytics platform designed from zero — from the first metric to the weekly report Kibit's team runs on.</p>
         <div class="meta-tags reveal">
           <span class="meta-tag"><i class="fa-solid fa-user-pen"></i> Lead UX/UI</span>
           <span class="meta-tag"><i class="fa-solid fa-building"></i> Kibit</span>
-          <span class="meta-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Claude Design (AI)</span>
+          <span class="meta-tag"><i class="fa-solid fa-clock"></i> 5 months</span>
           <span class="meta-tag"><i class="fa-solid fa-arrow-right-long"></i> Define → Instrument → Ship</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== KEY NUMBERS ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>~30</b><span>KPIs across the AARRR funnel</span></div>
+          <div class="stat"><b>4</b><span>data sources in one report</span></div>
+          <div class="stat"><b>6</b><span>lenses, one visual language</span></div>
+          <div class="stat"><b>1</b><span>weekly source of truth</span></div>
         </div>
       </div>
     </section>
@@ -511,18 +532,17 @@
       <div class="wrap">
         <div class="duo">
           <div class="info-card reveal">
-            <p class="eyebrow">Context &amp; challenge</p>
-            <h3>The challenge</h3>
-            <p class="body-text">We built Kibit from a blank page — so there was no analytics to redesign. The numbers the business would run on didn’t exist yet. The hard part wasn’t drawing charts; it was getting product, growth and engineering to agree on what to measure and how to count it.</p>
+            <p class="eyebrow">Challenge</p>
+            <h3>No data to redesign</h3>
+            <p class="body-text">Kibit started from a blank page. The real work wasn't drawing charts — it was getting product, growth and engineering to agree on what to measure.</p>
           </div>
           <div class="info-card reveal">
             <p class="eyebrow">Objective</p>
-            <h3>The objective</h3>
-            <p class="body-text">Stand up Kibit’s analytics from zero:</p>
+            <h3>Analytics from zero</h3>
             <ul class="obj-list">
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Define</strong> — what success looks like for a new subscription app.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Instrument</strong> — every event with engineering.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Ship</strong> — a report that works for a 5-second glance and a deep dive.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Define</strong> — success for a new subscription app.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Instrument</strong> — every event, with engineering.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Ship</strong> — one report for a 5-second glance and a deep dive.</li>
             </ul>
           </div>
         </div>
@@ -535,12 +555,25 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">The solution</p>
           <h2 class="sec-title">A weekly report that reads like an editorial, not a dashboard</h2>
-          <p class="body-text">It unifies four sources (GA4, Firestore, RevenueCat, stores) into one weekly snapshot.</p>
-          <p class="body-text"><strong>A “read of the week.”</strong> Each report opens with an auto-written line — “Views grew +21%; conversion at 0% missed the 2–3% goal.” The takeaway lands before any chart.</p>
-          <p class="body-text"><strong>Metrics with built-in targets.</strong> KPI cards color against their goal, not just last week. You read health before the number.</p>
-          <p class="body-text"><strong>Six lenses, one language.</strong> Summary (5-second read), Content (analyst depth + CSV), Acquisition (GA4 funnels), Monetization (paywalls by origin), Feedback (ratings + real messages), Team.</p>
-          <p class="body-text"><strong>One color system.</strong> Teal = healthy, red = off — everywhere, always vs. the target.</p>
-          <p class="body-text"><strong>Editorial, on purpose.</strong> Serif for human quotes, sans for data, calm warm surface. It doesn’t look like a BI tool — so people actually read it.</p>
+          <p class="body-text">GA4, Firestore, RevenueCat and the stores — in one weekly snapshot.</p>
+        </div>
+        <div class="role-grid">
+          <div class="role-card reveal">
+            <h3>Read of the week</h3>
+            <p>An auto-written headline lands the takeaway before any chart.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Built-in targets</h3>
+            <p>KPIs turn teal or red against the goal — not just last week.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Six lenses</h3>
+            <p>Summary, Content, Acquisition, Monetization, Feedback, Team.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Editorial on purpose</h3>
+            <p>It doesn't look like a BI tool — so people actually read it.</p>
+          </div>
         </div>
       </div>
       <div class="wrap">
@@ -556,13 +589,13 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Research</p>
           <h2 class="sec-title">Before designing a screen, I designed the questions</h2>
-          <p class="body-text">With no data to study, I worked two fronts at once: stakeholders (what decisions do you make weekly?) and engineering (what can we actually capture?).</p>
+          <p class="body-text">What do you decide every week? What can we actually capture?</p>
         </div>
         <ul class="insight-list reveal">
-          <li><h4>Two reading speeds</h4><p>Leadership needs 5-second KPIs; the team needs deep filters and export. One screen can't do both.</p></li>
-          <li><h4>Same word, same number</h4><p>“Conversion” meant different things to different people. Defining metrics mattered more than visualizing them.</p></li>
-          <li><h4>A number needs a target</h4><p>“0% conversion” means nothing until you see it against a 2–3% goal.</p></li>
-          <li><h4>The funnel is the spine</h4><p>Onboarding → subscription drove everything, so it leads the report.</p></li>
+          <li><h4>Two reading speeds</h4><p>5-second KPIs for leadership; filters and export for the team.</p></li>
+          <li><h4>Same word, same number</h4><p>“Conversion” meant different things to different people.</p></li>
+          <li><h4>A number needs a target</h4><p>0% means nothing without the 2–3% goal next to it.</p></li>
+          <li><h4>The funnel is the spine</h4><p>Onboarding → subscription leads the report.</p></li>
         </ul>
       </div>
     </section>
@@ -572,8 +605,15 @@
       <div class="wrap">
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Role</p>
-          <h2 class="sec-title">I led the analytics end to end — from metric definition to shipped platform</h2>
-          <p class="body-text">Role: Lead UX/UI · Product Designer. Timeline &amp; tools: 5 months · Claude Design (AI) · Illustrator · GA4 · RevenueCat · App Stores · Google Sheets.</p>
+          <h2 class="sec-title">End to end — from metric definition to shipped platform</h2>
+          <div class="meta-tags">
+            <span class="meta-tag">Claude Design</span>
+            <span class="meta-tag">Illustrator</span>
+            <span class="meta-tag">GA4</span>
+            <span class="meta-tag">RevenueCat</span>
+            <span class="meta-tag">App Stores</span>
+            <span class="meta-tag">Google Sheets</span>
+          </div>
         </div>
         <div class="role-grid">
           <div class="role-card reveal">
@@ -586,11 +626,11 @@
           </div>
           <div class="role-card reveal">
             <h3>IA</h3>
-            <p>Split the report into six lenses around real decisions.</p>
+            <p>Six lenses, built around real decisions.</p>
           </div>
           <div class="role-card reveal">
             <h3>Data viz &amp; UI</h3>
-            <p>Charts, goal-based color, and the full launch-ready design.</p>
+            <p>Charts, goal-based color, launch-ready design.</p>
           </div>
         </div>
         <div class="ph flows reveal" style="margin-top: clamp(20px, 2.6vw, 30px);">
@@ -599,30 +639,29 @@
       </div>
     </section>
 
-    <!-- ===================== PROCESS ===================== -->
-    <!-- ===================== OUTCOME & DESIGN GOALS ===================== -->
+    <!-- ===================== OUTCOME ===================== -->
     <section class="block">
       <div class="wrap">
         <div class="outcome-card reveal">
           <p class="eyebrow">Outcome</p>
           <h2 class="sec-title">Kibit's first shared source of truth</h2>
-          <p class="body-text">The team went from scattered numbers to one weekly report everyone reads — and, more importantly, a shared language. “Conversion,” “activation,” “a title that works” now mean the same thing to everyone, because the definitions and targets live inside the tool. A framework that didn’t exist five months earlier became the default way the team sees the product.</p>
-          <p class="body-text"><strong>What I learned:</strong> the hard part of a metrics product isn’t the dashboard — it’s the definitions underneath, and giving every number a target. Designing the language of the data was as much product design as designing the screens.</p>
+          <p class="body-text">From scattered numbers to one weekly report everyone reads — and a shared language, because definitions and targets live inside the tool.</p>
+          <p class="body-text"><strong>What I learned:</strong> the hard part of a metrics product isn't the dashboard. It's the definitions underneath.</p>
           <div class="goal-row">
             <div class="goal">
               <i class="ti ti-target-arrow"></i>
               <h4>Defined</h4>
-              <p>A metric framework and event taxonomy built from a blank page.</p>
+              <p>Metric framework and event taxonomy, from a blank page.</p>
             </div>
             <div class="goal">
               <i class="ti ti-plug-connected"></i>
               <h4>Instrumented</h4>
-              <p>Four data sources unified into one weekly snapshot.</p>
+              <p>Four sources unified into one weekly snapshot.</p>
             </div>
             <div class="goal">
               <i class="ti ti-rocket"></i>
               <h4>Shipped</h4>
-              <p>A report serving the 5-second glance and the deep dive, in one language.</p>
+              <p>One report for the glance and the deep dive.</p>
             </div>
           </div>
         </div>
@@ -633,7 +672,7 @@
   <!-- ===================== FOOTER BAND ===================== -->
   <footer class="footer">
     <div class="wrap">
-      <h2>Design is empathy made visible.</h2>
+      <h2>Design that feels right — and data that proves it.</h2>
       <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
     </div>
   </footer>

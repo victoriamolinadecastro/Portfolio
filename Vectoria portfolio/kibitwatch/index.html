@@ -451,6 +451,13 @@
   @media (max-width: 380px) {
     .nav a { font-size: 12.5px; padding: 6px 10px; }
   }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -461,6 +468,7 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
@@ -472,7 +480,8 @@
       <div class="wrap case-hero-copy">
         <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
         <div class="card-tags reveal">
-          <span class="tag">UX / UI</span>
+          <span class="tag">watchOS</span>
+          <span class="tag">Cross-device</span>
           <span class="tag">Product Design</span>
         </div>
         <h1 class="reveal">Never Lose Your Place</h1>
@@ -487,20 +496,34 @@
       </div>
     </section>
 
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>Live</b><span>on the App Store</span></div>
+          <div class="stat"><b>3</b><span>core states: continue, play, read</span></div>
+          <div class="stat"><b>4</b><span>native tabs to browse from the wrist</span></div>
+          <div class="stat"><b>2</b><span>flows mapped before any screen</span></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== CONTEXT & CHALLENGE / OBJECTIVE ===================== -->
     <section class="block">
       <div class="wrap">
         <div class="duo">
           <div class="info-card reveal">
             <p class="eyebrow">Context &amp; Challenge</p>
-            <h3>The challenge</h3>
-            <p class="body-text">Kibit's core experience lived entirely on the phone: users listened to or read their “kibits” in short sessions throughout the day. Extending that experience to Apple Watch meant designing for a completely different context — no screen real estate for a full library browser, no keyboard, glances instead of sessions — while still feeling like the same product.</p>
-            <p class="body-text">The main challenge wasn't visual, it was structural: the watch had to reflect, in real time, exactly where the user had left off on the phone. Progress, chapter, playback position — everything needed to sync seamlessly across devices so the experience felt continuous rather than like two separate apps sharing a name. Beyond sync, the watch also needed its own lightweight navigation, letting users browse, discover, and revisit content natively, without turning to the phone for anything but subscribing.</p>
+            <h3>Glances, not sessions</h3>
+            <p class="body-text">No room for a library, no keyboard. The real challenge was structural: the watch had to know exactly where you left off on the phone — chapter, position, progress — and still let you browse on its own.</p>
           </div>
           <div class="info-card reveal">
             <p class="eyebrow">Objective</p>
-            <h3>The objective</h3>
-            <p class="body-text">Design a watchOS experience that increased listening time by removing friction from the moments phones aren't convenient — walking, exercising, commuting — while keeping content perfectly in sync with the phone, so users could pick up a kibit on one device and continue it on the other without thinking about it. The experience also needed to give free users a clear, low-friction path to understand and act on premium content directly from the wrist.</p>
+            <h3>More listening, less friction</h3>
+            <ul class="obj-list">
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Listen more</strong> — when walking, exercising or commuting.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Stay in sync</strong> — start on one device, continue on the other.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Show the upgrade</strong> — a clear premium path from the wrist.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -512,7 +535,20 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">The solution</p>
           <h2 class="sec-title">A minimal, glanceable interface</h2>
-          <p class="body-text">Built around three core states: continue listening, active playback, and switching to reader. The watch mirrors the phone's library and progress automatically, so opening Kibit on the wrist always shows exactly where the user is, whether that session started on the phone or the watch itself. On top of that, premium users get a native browsing layer — Continue, Explore, Bookmarks, and Vistos — navigable by swipe, so the watch works as a self-contained experience rather than a remote control for the phone. Offline states and reconnection flows were designed explicitly, since watch usage skews toward moments with unreliable connectivity.</p>
+          </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: clamp(26px, 3vw, 38px);">
+          <div class="role-card reveal">
+            <h3>Always in sync</h3>
+            <p>Opens exactly where you are, wherever the session started.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Not a remote</h3>
+            <p>Continue, Explore, Bookmarks and Vistos — by swipe.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Offline by design</h3>
+            <p>Explicit offline and reconnection states.</p>
+          </div>
         </div>
         <div class="ph showcase reveal" id="kw-solution-wrap">
           <image-slot id="kw-solution" src="../2605_kibit_mapeo-apple-watch-ms9bo8gx-32x4.jpg" placeholder="Drop the watch UI showcase (player, reader, library)"></image-slot>
@@ -530,7 +566,7 @@
         <div class="role-grid cols-5">
           <div class="role-card reveal">
             <h3>Flow design</h3>
-            <p>End-to-end flow design — phone-to-watch handoff, sync logic mapping.</p>
+            <p>Phone-to-watch handoff and sync logic.</p>
           </div>
           <div class="role-card reveal">
             <h3>UX research</h3>
@@ -542,7 +578,7 @@
           </div>
           <div class="role-card reveal">
             <h3>High-fidelity UI</h3>
-            <p>Player, reader, library, offline states, native navigation for watchOS.</p>
+            <p>Player, reader, library and offline states.</p>
           </div>
           <div class="role-card reveal">
             <h3>Sync &amp; edge cases</h3>
@@ -558,8 +594,8 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Process</p>
           <h2 class="sec-title">Two flows, mapped before any screen was designed</h2>
-          <p class="body-text">The first followed the cross-device handoff: opening a kibit on the phone, continuing it on the watch, playing a chapter, switching to reader mode, and browsing the library or offline states directly on the wrist. This surfaced every sync point that needed a defined state.</p>
-          <p class="body-text">The second mapped watch-native navigation for premium users: swiping between Continue, Explore (with recommendations and a “surprise me” entry point), Bookmarks, and Vistos, all designed to work as a self-contained browsing layer without needing the phone. This flow also defined the paywall moment: when a free user reaches premium content on the watch, a blocker explains the restriction and redirects the upgrade action to the phone, since subscription management lives there.</p>
+          <p class="body-text"><strong>1 · Cross-device handoff</strong> — phone to watch, play to read, online to offline. It surfaced every sync point that needed a state.</p>
+          <p class="body-text"><strong>2 · Watch-native navigation</strong> — browsing without the phone, plus the paywall moment: a blocker that explains and sends the upgrade to the phone.</p>
         </div>
         <div class="process-stack" style="margin-top: clamp(26px, 3vw, 38px);">
           <div class="process-item reveal">
@@ -580,12 +616,12 @@
         <div class="outcome-card reveal">
           <p class="eyebrow">Outcome &amp; Design Goals</p>
           <h2 class="sec-title">Switching devices mid-session feels invisible</h2>
-          <p class="body-text">Shipped a watchOS experience where switching devices mid-session feels invisible to the user.</p>
+          <p class="body-text">Shipped to the App Store: a watch app where changing devices mid-session goes unnoticed.</p>
           <div class="goal-row cols-4">
             <div class="goal">
               <i class="ti ti-bolt"></i>
               <h4>Zero lag</h4>
-              <p>Zero perceived sync lag between devices.</p>
+              <p>No perceived sync lag between devices.</p>
             </div>
             <div class="goal">
               <i class="ti ti-toggle-right"></i>
@@ -594,13 +630,13 @@
             </div>
             <div class="goal">
               <i class="ti ti-wifi-off"></i>
-              <h4>Clear offline handling</h4>
-              <p>Instead of silent failures.</p>
+              <h4>Clear offline</h4>
+              <p>No silent failures.</p>
             </div>
             <div class="goal">
               <i class="ti ti-compass"></i>
               <h4>Native browsing layer</h4>
-              <p>Explore, Bookmarks, Vistos — keeps free users engaged and signals the upgrade path clearly.</p>
+              <p>Keeps free users engaged and the upgrade path clear.</p>
             </div>
           </div>
         </div>
@@ -611,7 +647,7 @@
   <!-- ===================== FOOTER BAND ===================== -->
   <footer class="footer">
     <div class="wrap">
-      <h2>Design is empathy made visible.</h2>
+      <h2>Design that feels right — and data that proves it.</h2>
       <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
     </div>
   </footer>

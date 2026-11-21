@@ -284,6 +284,7 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
@@ -292,7 +293,7 @@
       <div class="wrap">
         <span class="pill-label reveal">My Work</span>
         <h1 class="reveal">From Challenge to Solution</h1>
-        <p class="reveal">Explore a curated selection of my product design projects. Each case study details my process of transforming complex challenges into intuitive, user-centered digital experiences through research, strategy, and visual execution.</p>
+        <p class="reveal">Selected work across subscription apps, analytics and gamification. Each case walks through the problem, the decisions behind the design and how success gets measured.</p>
       </div>
     </header>
 
@@ -301,20 +302,31 @@
       <div class="wrap">
         <div class="work-grid">
 
-          <a class="work-card reveal" href="/aventura/" aria-label="Case study: Gamified Knowledge Retention">
+          <a class="work-card reveal" href="/onboarding-platform/" aria-label="Case study: Onboarding Experimentation Platform">
             <div class="wc-head">
-              <span class="tag">UX / UI</span>
-              <h3 class="wc-title">From Browsing to Loyalty: Gamifying for Higher Retention</h3>
-              <p class="wc-desc">Gamification Strategies to Boost User Retention in Digital Encyclopedias.</p>
+              <span class="tag">Experimentation / CRO</span>
+              <h3 class="wc-title">Onboarding Experimentation Platform</h3>
+              <p class="wc-desc">Designing A/B testing for web-to-app acquisition funnels.</p>
             </div>
             <div class="wc-media">
-              <image-slot id="work-1" src="../assets/work-1.webp" placeholder="Drop the Gamified case cover"></image-slot>
+              <image-slot id="work-op" src="../assets/op-card.webp" placeholder="Drop the experimentation platform cover"></image-slot>
+            </div>
+          </a>
+
+          <a class="work-card reveal" href="/kibit-media-kit/" aria-label="Case study: AI-first media kit">
+            <div class="wc-head">
+              <span class="tag">AI-first / Prototyping</span>
+              <h3 class="wc-title">A Media Kit You Can Tap Through</h3>
+              <p class="wc-desc">A live page with a working app prototype — brief to link in 2 days, AI-first.</p>
+            </div>
+            <div class="wc-media">
+              <image-slot id="work-mk" src="../assets/mk-card.webp" placeholder="Drop the media kit cover"></image-slot>
             </div>
           </a>
 
           <a class="work-card reveal" href="/kibitanalytics/" aria-label="Case study: Kibit Analytics">
             <div class="wc-head">
-              <span class="tag">UX / UI / Data</span>
+              <span class="tag">Analytics / KPIs / Reporting</span>
               <h3 class="wc-title">Making Data Legible</h3>
               <p class="wc-desc">Building a subscription app's analytics platform from a blank page.</p>
             </div>
@@ -323,14 +335,47 @@
             </div>
           </a>
 
+          <a class="work-card reveal" href="/kibitreboot/" aria-label="Case study: The Emotional Reboot">
+            <div class="wc-head">
+              <span class="tag">Redesign / Onboarding / Monetization</span>
+              <h3 class="wc-title">The Emotional Reboot</h3>
+              <p class="wc-desc">Redesigning Kibit from feeling like studying into an emotional, immersive experience.</p>
+            </div>
+            <div class="wc-media">
+              <image-slot id="work-3" src="../assets/work-3.webp" placeholder="Drop the Emotional Reboot cover"></image-slot>
+            </div>
+          </a>
+
           <a class="work-card reveal" href="/kibit/" aria-label="Case study: Kibit — Big ideas, in minutes">
             <div class="wc-head">
-              <span class="tag">UX / UI · Product Design</span>
+              <span class="tag">0-to-1 / Subscription app</span>
               <h3 class="wc-title">Kibit, big ideas, in minutes</h3>
               <p class="wc-desc">From research to a shipped subscription app, designed from a blank page.</p>
             </div>
             <div class="wc-media">
               <image-slot id="work-7" src="../assets/work-7.webp" placeholder="Drop the Kibit product cover"></image-slot>
+            </div>
+          </a>
+
+          <a class="work-card reveal" href="/aventura/" aria-label="Case study: Gamified Knowledge Retention">
+            <div class="wc-head">
+              <span class="tag">Gamification / Retention</span>
+              <h3 class="wc-title">From Browsing to Loyalty: Gamifying for Higher Retention</h3>
+              <p class="wc-desc">A trivia layer that turned a browse-and-leave encyclopedia into a reason to come back.</p>
+            </div>
+            <div class="wc-media">
+              <image-slot id="work-1" src="../assets/work-1.webp" placeholder="Drop the Gamified case cover"></image-slot>
+            </div>
+          </a>
+
+          <a class="work-card reveal" href="/kibitwatch/" aria-label="Case study: Kibit, Never Lose Your Place">
+            <div class="wc-head">
+              <span class="tag">watchOS / Product Design</span>
+              <h3 class="wc-title">Never Lose Your Place</h3>
+              <p class="wc-desc">Extending Kibit's reading and listening experience to Apple Watch, fully synced with the phone.</p>
+            </div>
+            <div class="wc-media">
+              <image-slot id="work-6" src="../assets/work-6.webp" placeholder="Drop the Apple Watch cover"></image-slot>
             </div>
           </a>
 
@@ -345,27 +390,7 @@
             </div>
           </a>
 
-          <a class="work-card reveal" href="/kibitreboot/" aria-label="Case study: The Emotional Reboot">
-            <div class="wc-head">
-              <span class="tag">UX / UI / Redesign</span>
-              <h3 class="wc-title">The Emotional Reboot</h3>
-              <p class="wc-desc">Redesigning Kibit from feeling like studying into an emotional, immersive experience.</p>
-            </div>
-            <div class="wc-media">
-              <image-slot id="work-3" src="../assets/work-3.webp" placeholder="Drop the Emotional Reboot cover"></image-slot>
-            </div>
-          </a>
 
-          <a class="work-card reveal" href="/kibitwatch/" aria-label="Case study: Kibit, Never Lose Your Place">
-            <div class="wc-head">
-              <span class="tag">UX / UI / Product Design</span>
-              <h3 class="wc-title">Never Lose Your Place</h3>
-              <p class="wc-desc">Extending Kibit's reading and listening experience to Apple Watch, fully synced with the phone.</p>
-            </div>
-            <div class="wc-media">
-              <image-slot id="work-6" src="../assets/work-6.webp" placeholder="Drop the Apple Watch cover"></image-slot>
-            </div>
-          </a>
 
 
         </div>
@@ -375,7 +400,7 @@
     <!-- ===================== CLOSING ===================== -->
     <section class="closing">
       <div class="wrap">
-        <h2 class="reveal">Design is empathy made visible.</h2>
+        <h2 class="reveal">Design that feels right — and data that proves it.</h2>
         <a href="/contact/" class="cta reveal">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
       </div>
     </section>

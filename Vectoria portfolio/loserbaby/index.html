@@ -447,6 +447,13 @@
   @media (max-width: 380px) {
     .nav a { font-size: 12.5px; padding: 6px 10px; }
   }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -457,6 +464,7 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
@@ -474,12 +482,23 @@
           <span class="tag">Branding</span>
         </div>
         <h1 class="reveal">Designed to Be Real</h1>
-        <p class="lead reveal">Designing a dating app where being authentic is the real draw — from research to a complete product.</p>
+        <p class="lead reveal">A dating app where being authentic is the real draw — from research to a complete, launch-ready product.</p>
         <div class="meta-tags reveal">
           <span class="meta-tag"><i class="fa-solid fa-user-pen"></i> Lead UX/UI</span>
           <span class="meta-tag"><i class="fa-solid fa-building"></i> I'm a Loser, Baby</span>
-          <span class="meta-tag"><i class="fa-brands fa-figma"></i> Figma</span>
+          <span class="meta-tag"><i class="fa-solid fa-clock"></i> 6 months</span>
           <span class="meta-tag"><i class="fa-solid fa-arrow-right-long"></i> Research → Full Design</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>3</b><span>research fronts: benchmark, interviews, monetization</span></div>
+          <div class="stat"><b>3</b><span>taste integrations: YouTube, Spotify, X</span></div>
+          <div class="stat"><b>5</b><span>premium features from the monetization analysis</span></div>
+          <div class="stat"><b>6</b><span>months, research to final UI</span></div>
         </div>
       </div>
     </section>
@@ -490,16 +509,16 @@
         <div class="duo">
           <div class="info-card reveal">
             <p class="eyebrow">Challenge</p>
-            <h3>The challenge</h3>
-            <p class="body-text">Dating apps reward perfection — retouched photos, exaggerated profiles, matches by looks. The result: people pretending to be someone they're not, and empty connections. The challenge wasn't to build "another swipe app," but one where showing your real self — even your most "loser" side — is what makes you attractive.</p>
+            <h3>Apps that reward pretending</h3>
+            <p class="body-text">Retouched photos, matches by looks, empty connections. The goal: an app where your real self — even your most “loser” side — is what makes you attractive.</p>
           </div>
           <div class="info-card reveal">
             <p class="eyebrow">Objective</p>
-            <h3>The objective</h3>
+            <h3>Make authenticity the feature</h3>
             <ul class="obj-list">
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Redefine the profile</strong> — show personality, not an edited version.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Real matching</strong> — a system based on real interests and values.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Complete product</strong> — brand, app, monetization and store communication.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Profile</strong> — personality, not an edited version.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Matching</strong> — on real interests and values.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Product</strong> — brand, app, monetization and stores.</li>
             </ul>
           </div>
         </div>
@@ -511,8 +530,13 @@
       <div class="wrap">
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Role</p>
-          <h2 class="sec-title">I led the design end to end — from research to final UI</h2>
-          <p class="body-text">Role: Lead UX/UI · Product Designer. Timeline &amp; tools: 6 months · Figma · Adobe XD · Adobe Illustrator · Photoshop. Status: complete design, ready to launch (not yet in stores).</p>
+          <h2 class="sec-title">End to end — from research to final UI</h2>
+          <div class="meta-tags">
+            <span class="meta-tag">Figma</span>
+            <span class="meta-tag">Adobe XD</span>
+            <span class="meta-tag">Illustrator</span>
+            <span class="meta-tag">Photoshop</span>
+          </div>
         </div>
         <div class="role-grid">
           <div class="role-card reveal">
@@ -540,10 +564,8 @@
       <div class="wrap">
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Research</p>
-          <h2 class="sec-title">Understanding why dating apps feel fake — and how they make money</h2>
-          <p class="body-text"><strong>Hands-on benchmark.</strong> Used the leading apps first-hand to map patterns, friction and what felt superficial.</p>
-          <p class="body-text"><strong>User interviews.</strong> To understand what people really want and why current apps frustrate them.</p>
-          <p class="body-text"><strong>Monetization analysis.</strong> Studied which apps monetize best and why, which are most used and what models work — to design premium that adds value instead of interrupting.</p>
+          <h2 class="sec-title">Why dating apps feel fake — and how they make money</h2>
+          <p class="body-text">A hands-on benchmark of the leading apps, user interviews, and an analysis of which monetization models work — to design a premium that adds value instead of interrupting.</p>
         </div>
         <div class="ph research-showcase reveal">
           <image-slot id="lb-research" src="../assets/lb-research.webp" placeholder="Drop the competitive apps research"></image-slot>
@@ -554,7 +576,7 @@
           <li><h4>The first move is a barrier</h4><p>Many struggle to start the conversation; fast swiping doesn't help.</p></li>
         </ul>
         <div class="narrow reveal" style="margin-inline:0; margin-top: clamp(24px,3vw,34px);">
-          <p class="body-text"><strong>Archetype:</strong> introverts who struggle to make the first move, non-superficial people looking for more than looks, and people with slightly off-the-norm interests.</p>
+          <p class="body-text"><strong>Who it's for:</strong> introverts, people looking past looks, and anyone with off-the-norm interests.</p>
         </div>
       </div>
     </section>
@@ -565,13 +587,35 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">The solution</p>
           <h2 class="sec-title">A profile that shows who you really are — and matching that rewards it</h2>
-          <p class="body-text"><strong>Authentic profile.</strong> Personality prompts with humor ("What's your secret superpower?", "If your pet could talk…") plus real photos and videos of your fun side, not a retouched book.</p>
-          <p class="body-text"><strong>Identity from your taste.</strong> YouTube, Spotify and X integrations: your videos, playlists and artists, what you read — your profile is built from your real taste, not from what you say about yourself.</p>
-          <p class="body-text"><strong>“My ideal loser” (affinity matching).</strong> An interests-and-values profiling (lifestyle, music, games, hobbies) that connects on what matters, not just the photo.</p>
-          <p class="body-text"><strong>Stories to break the ice.</strong> Share moments of your day with your matches and get reactions — conversations that start themselves.</p>
-          <p class="body-text"><strong>Second chance.</strong> Profiles you passed can come back: less rushed swiping, more real chances.</p>
-          <p class="body-text"><strong>Premium model.</strong> Superlike, incognito mode, "who likes me," rewind and featured profile — features defined from the monetization analysis, built into the experience.</p>
-          <p class="body-text"><strong>Brand &amp; communication.</strong> I also designed the identity ("Dare to celebrate your differences"), the landing page and the store page — a warm, fun, no-pretense tone, consistent across every touchpoint.</p>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: clamp(26px, 3vw, 38px);">
+          <div class="role-card reveal">
+            <h3>Authentic profile</h3>
+            <p>Funny personality prompts and real photos — not a retouched book.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Identity from your taste</h3>
+            <p>Built from your YouTube, Spotify and X, not from what you claim.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>“My ideal loser”</h3>
+            <p>Affinity matching on interests and values.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Stories</h3>
+            <p>Share your day; conversations start themselves.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Second chance</h3>
+            <p>Passed profiles can come back. Less rushed swiping.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Premium</h3>
+            <p>Superlike, incognito, who likes me, rewind, featured.</p>
+          </div>
+        </div>
+        <div class="narrow reveal" style="margin-inline:0; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <p class="body-text"><strong>Brand too:</strong> identity (“Dare to celebrate your differences”), landing and store page — one warm, no-pretense tone everywhere.</p>
         </div>
         <div class="showcase-stack">
           <div class="ph sc-big reveal"><image-slot id="lb-profile" src="../assets/lb-profile.webp" placeholder="Drop profile + YouTube/Spotify/X integration screens"></image-slot></div>
@@ -602,7 +646,7 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Validation</p>
           <h2 class="sec-title">Validated with leadership</h2>
-          <p class="body-text">No formal user testing: the project was presented to the company's owners, who were very happy with the proposal. It sat behind other roadmap priorities, with the full design ready to be picked up and shipped.</p>
+          <p class="body-text">Presented to the company's owners, who loved it. No formal user testing yet — the full design is ready to ship when the roadmap allows.</p>
         </div>
       </div>
     </section>
@@ -613,8 +657,8 @@
         <div class="outcome-card reveal">
           <p class="eyebrow">Outcome</p>
           <h2 class="sec-title">A complete product, ready to launch</h2>
-          <p class="body-text">From a concept to a finished design system: brand, end-to-end app, monetization model and store communication — all ready to publish.</p>
-          <p class="body-text"><strong>What I learned:</strong> designing for a specific niche leads to braver, more coherent decisions than designing for "everyone" — specificity isn't a limitation, it's what gives a product its personality. And designing for authenticity is as much a problem of tone, brand and strategy as of UI: you have to design the whole experience so people feel safe being real.</p>
+          <p class="body-text">From concept to brand, app, monetization model and store communication — ready to publish.</p>
+          <p class="body-text"><strong>What I learned:</strong> designing for a niche leads to braver decisions than designing for “everyone.” Specificity is what gives a product its personality.</p>
           <div class="goal-row">
             <div class="goal">
               <i class="ti ti-pencil"></i>
@@ -640,7 +684,7 @@
   <!-- ===================== FOOTER BAND ===================== -->
   <footer class="footer">
     <div class="wrap">
-      <h2>Design is empathy made visible.</h2>
+      <h2>Design that feels right — and data that proves it.</h2>
       <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
     </div>
   </footer>

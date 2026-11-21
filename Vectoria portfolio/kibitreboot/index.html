@@ -469,6 +469,13 @@
   @media (max-width: 380px) {
     .nav a { font-size: 12.5px; padding: 6px 10px; }
   }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -479,6 +486,7 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
@@ -490,19 +498,29 @@
       <div class="wrap case-hero-copy">
         <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
         <div class="card-tags reveal">
-          <span class="tag">UX / UI</span>
-          <span class="tag">Product Design</span>
           <span class="tag">Redesign</span>
+          <span class="tag">Onboarding</span>
+          <span class="tag">Monetization</span>
         </div>
         <h1 class="reveal">The Emotional Reboot</h1>
-        <p class="lead reveal">The evolution of Kibit from a summaries app that felt academic into an emotional, immersive experience, without ceasing to be a reader and audio library.</p>
+        <p class="lead reveal">Kibit felt like homework. I redesigned it into an emotional, immersive experience — same reader and audio library, a whole new feeling.</p>
         <div class="meta-tags reveal">
           <span class="meta-tag"><i class="fa-solid fa-user-pen"></i> Lead UX/UI</span>
           <span class="meta-tag"><i class="fa-solid fa-building"></i> Kibit</span>
-          <span class="meta-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Figma + AI</span>
+          <span class="meta-tag"><i class="fa-solid fa-clock"></i> 3 months</span>
           <span class="meta-tag"><i class="fa-solid fa-arrow-right-long"></i> Evolution → Redesign</span>
         </div>
-        <p class="body-text reveal" style="margin-top:22px; font-style:italic; color:var(--text-2);">The evolution of “Kibit — Big ideas, in minutes.” There I built it from the ground up; here I made it grow.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>4</b><span>core flows redesigned</span></div>
+          <div class="stat"><b>6</b><span>contextual paywalls</span></div>
+          <div class="stat"><b>1</b><span>blocking map of every conversion point</span></div>
+          <div class="stat"><b>3</b><span>months, end to end</span></div>
+        </div>
       </div>
     </section>
 
@@ -512,17 +530,16 @@
         <div class="duo">
           <div class="info-card reveal">
             <p class="eyebrow">Challenge</p>
-            <h3>The challenge</h3>
-            <p class="body-text">Kibit was already launched and working book summaries to read or listen to in about ten minutes. But its visual language didn't match its content. The content is emotional relationships, anxiety, personal growth yet the clear, editorial, text-heavy interface made it feel like you were about to do “self-help homework,” not something that gets you. Discovery was by category, detail screens asked you to read a lot to decide, and onboarding felt like a form.</p>
+            <h3>Emotional content, academic interface</h3>
+            <p class="body-text">Kibit's summaries are about relationships, anxiety and growth — but the text-heavy UI felt like “self-help homework.” Discovery by category, too much reading to decide, an onboarding that felt like a form.</p>
           </div>
           <div class="info-card reveal">
             <p class="eyebrow">Objective</p>
-            <h3>The objective</h3>
-            <p class="body-text" style="margin-bottom:14px;">Reposition the experience without changing what the app is:</p>
+            <h3>Reposition, don't reinvent</h3>
             <ul class="obj-list">
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Align</strong> the visual language to the user's emotional state.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Redesign discovery</strong> to be immersive and emotion-led, not category-led.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Rethink monetization</strong> as a contextual system, not a stray paywall.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Align</strong> the visuals with the user's emotional state.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Discovery</strong> led by emotion, not category.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Monetization</strong> as a system, not a stray paywall.</li>
             </ul>
           </div>
         </div>
@@ -538,16 +555,23 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Role</p>
           <h2 class="sec-title">I led the redesign end to end</h2>
-          <p class="body-text">Role: Lead UX/UI · Product Designer. Timeline &amp; tools: 3 months · Figma · Illustrator · Photoshop · Google AI Studio · Claude · Gemini.</p>
+          <div class="meta-tags">
+            <span class="meta-tag">Figma</span>
+            <span class="meta-tag">Illustrator</span>
+            <span class="meta-tag">Photoshop</span>
+            <span class="meta-tag">Google AI Studio</span>
+            <span class="meta-tag">Claude</span>
+            <span class="meta-tag">Gemini</span>
+          </div>
         </div>
         <div class="role-grid">
           <div class="role-card reveal">
             <h3>Strategy</h3>
-            <p>The repositioning from “study task” to emotional experience.</p>
+            <p>From “study task” to emotional experience.</p>
           </div>
           <div class="role-card reveal">
             <h3>UX / IA</h3>
-            <p>Redesign of onboarding, discovery and monetization flows.</p>
+            <p>Onboarding, discovery and monetization flows.</p>
           </div>
           <div class="role-card reveal">
             <h3>UI</h3>
@@ -555,7 +579,7 @@
           </div>
           <div class="role-card reveal">
             <h3>System</h3>
-            <p>Full mapping of the blocking / paywall touchpoints.</p>
+            <p>Every blocking and paywall touchpoint, mapped.</p>
           </div>
         </div>
       </div>
@@ -567,8 +591,21 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">The pivot</p>
           <h2 class="sec-title">From studying to feeling</h2>
-          <p class="body-text">Personal growth isn't consumed like a school subject it's consumed through identification and emotional pull. That idea guided the whole redesign: the interface had to evoke the mood instantly and lower the decision load, instead of asking you to read to find out whether something is for you.</p>
-          <p class="body-text">In practice, three moves: dark mode + photography for intimacy, discovery by emotion (not category), and monetization that earns the paywall instead of imposing it.</p>
+          <p class="body-text">Personal growth isn't studied — it's felt. The interface had to set the mood instantly and lower the decision load.</p>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div class="role-card reveal">
+            <h3>Dark + photographic</h3>
+            <p>Intimacy instead of an editorial page.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Discovery by emotion</h3>
+            <p>Rails by mood and moment, not category.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>An earned paywall</h3>
+            <p>Monetization that builds value before asking.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -583,7 +620,7 @@
 
         <div class="ba-block reveal">
           <p class="ba-title">Onboarding</p>
-          <p class="body-text" style="margin-bottom:16px;">Before: form-style questions with flat illustrations and a generic stepper, it felt like an academic test. After: a flow that starts from real pain (“We're all going through something: difficult relationships, anxiety…”), validates the emotion before asking for data, shows the value (experts, content) and only asks you to create an account at the end. It finishes by assembling your personalized “locked” content, a natural bridge to the paywall.</p>
+          <p class="body-text" style="margin-bottom:16px;"><strong>Before:</strong> a form that felt like a test. <strong>After:</strong> starts from real pain, shows the value first, asks for an account last — and ends on your personalized “locked” content, a natural bridge to the paywall.</p>
           <div class="ba-pair">
             <div class="ba-col"><span class="ba-tag">Before</span><div class="ph"><image-slot id="kr-onboard-before" src="../assets/kr-onboard-before.webp" placeholder="Before — onboarding"></image-slot></div></div>
             <div class="ba-col after"><span class="ba-tag">After</span><div class="ph"><image-slot id="kr-onboard-after" src="../assets/kr-onboard-after.webp" placeholder="After — onboarding"></image-slot></div></div>
@@ -592,7 +629,7 @@
 
         <div class="ba-block reveal">
           <p class="ba-title">Home / Discovery</p>
-          <p class="body-text" style="margin-bottom:16px;">Before: light background, square book-style covers, text lists (“The 10 summaries you need to read”). Discovery by category. After: immersive discovery. An emotional hero, a Top 10 row as social proof, and rails curated by mood and moment (“Audiobooks to heal,” “For listening in the car,” “If you can't afford therapy, listen to this”). Vertical, cinematic covers and a persistent mini-player.</p>
+          <p class="body-text" style="margin-bottom:16px;"><strong>Before:</strong> light lists by category. <strong>After:</strong> an emotional hero, a Top 10 as social proof and rails by mood (“Audiobooks to heal”), with cinematic covers and a persistent mini-player.</p>
           <div class="ba-pair">
             <div class="ba-col"><span class="ba-tag">Before</span><div class="ph"><image-slot id="kr-home-before" src="../assets/kr-home-before.webp" placeholder="Before — home"></image-slot></div></div>
             <div class="ba-col after"><span class="ba-tag">After</span><div class="ph"><image-slot id="kr-home-after" src="../assets/kr-home-after.webp" placeholder="After — home"></image-slot></div></div>
@@ -601,7 +638,7 @@
 
         <div class="ba-block reveal">
           <p class="ba-title">Content (read / listen)</p>
-          <p class="body-text" style="margin-bottom:16px;">Before: tapping a cover led to a preview screen holding all the content information synopsis, “what's it about?”, chapters and only from there could the user choose to open the reader or activate the player, two separate flows depending on the action. After: tapping any content opens directly into the player, which starts in autoplay. Reading is one tap away via “Read,” and the information that used to live in the preview now sits behind the “···” menu, available but no longer in the way. The decision prioritizes consumption over exploration, encouraging users to start listening or reading right away.</p>
+          <p class="body-text" style="margin-bottom:16px;"><strong>Before:</strong> a preview screen to read through before choosing reader or player. <strong>After:</strong> one tap opens the player in autoplay; reading is one tap away. Consumption over exploration.</p>
           <div class="ba-pair">
             <div class="ba-col"><span class="ba-tag">Before</span><div class="ph"><image-slot id="kr-content-before" placeholder="Before — content" src="../kibit_redisen-o_caso-portfolio-05-ms6swbhj-7dq2.jpg"></image-slot></div></div>
             <div class="ba-col after"><span class="ba-tag">After</span><div class="ph"><image-slot id="kr-content-after" placeholder="After — content" src="../kibit_redisen-o_caso-portfolio-06-ms6swh8o-8gpn.jpg"></image-slot></div></div>
@@ -610,7 +647,7 @@
 
         <div class="ba-block reveal">
           <p class="ba-title">Monetization (the blocking map)</p>
-          <p class="body-text" style="margin-bottom:16px;">Before: transactional paywalls that shouted the price (“70% OFF”) with generic vectors. After: a system of contextual paywalls one for each moment of the journey (post-profiling, inside content, gift, single purchase, full access, Premium from the profile) all with a value narrative (“It's your moment to evolve”) over cinematic photography. To get there, I mapped the whole journey in a “blocking map” that shows every conversion point and how you reach it system design, not stray screens.</p>
+          <p class="body-text" style="margin-bottom:16px;"><strong>Before:</strong> paywalls that shouted “70% OFF.” <strong>After:</strong> six contextual paywalls, one per moment of the journey, each with a value narrative — all ordered in a blocking map of every conversion point.</p>
           <div class="ba-pair">
             <div class="ba-col"><span class="ba-tag">Before</span><div class="ph"><image-slot id="kr-monet-before" src="../assets/kr-monet-before.webp" placeholder="Before — monetization"></image-slot></div></div>
             <div class="ba-col after"><span class="ba-tag">After</span><div class="ph"><image-slot id="kr-monet-after" src="../assets/kr-monet-after.webp" placeholder="After — monetization"></image-slot></div></div>
@@ -628,7 +665,7 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Visual system</p>
           <h2 class="sec-title">A new language: dark, photographic, cinematic</h2>
-          <p class="body-text">I moved from a light, illustrated scheme to dark mode with high-impact emotional photography and vertical, movie-poster-style covers. The same brand orange stayed as an accent over the dark background. The photography and covers were generated with AI (Google AI Studio, Claude, Gemini) and refined in Photoshop, for a coherent, custom visual world without stock imagery. The result: an intimate, comfortable space to consume in moments of vulnerability the app feels close and personal, not like a manual.</p>
+          <p class="body-text">Dark mode, emotional photography and movie-poster covers, with the brand orange as accent. Imagery generated with AI and refined in Photoshop — a custom world, no stock.</p>
         </div>
         <div class="ph research-showcase reveal">
           <image-slot id="kr-screens" src="../assets/kr-screens.jpg" placeholder="Drop the cinematic vertical covers strip"></image-slot>
@@ -642,8 +679,8 @@
         <div class="outcome-card reveal">
           <p class="eyebrow">Outcome</p>
           <h2 class="sec-title">From feeling like studying to feeling like something that gets you</h2>
-          <p class="body-text">The redesign fully repositions Kibit: the same summaries app in reader and audio, but with an emotional, immersive experience that meets the user's state from the first second. Onboarding, discovery, content and monetization, redesigned as one coherent system.</p>
-          <p class="body-text"><strong>What I learned:</strong> a redesign isn't makeup it's aligning the form with what the product really is. Kibit's content was always emotional; the work was making the interface finally say it. And thinking about monetization as a mapped system (not a stray paywall) is as much design as any screen.</p>
+          <p class="body-text">Same app, new feeling: onboarding, discovery, content and monetization redesigned as one system.</p>
+          <p class="body-text"><strong>What I learned:</strong> a redesign isn't makeup — it's making the form say what the product already is.</p>
           <div class="goal-row">
             <div class="goal">
               <i class="ti ti-heart"></i>
@@ -669,7 +706,7 @@
   <!-- ===================== FOOTER BAND ===================== -->
   <footer class="footer">
     <div class="wrap">
-      <h2>Design is empathy made visible.</h2>
+      <h2>Design that feels right — and data that proves it.</h2>
       <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
     </div>
   </footer>

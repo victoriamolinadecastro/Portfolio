@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Onboarding Experimentation Platform — Victoria Molina de Castro</title>
+<meta name="description" content="Case study: designing an internal platform to build, test and measure web onboardings for subscription apps." />
+<meta property="og:image" content="/assets/op-hero-wide.webp" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="../fonts/Defante.ttf?v=2" as="font" type="font/ttf" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css" />
+
+<style>
+  @font-face {
+    font-family: "Defante";
+    src: url("../fonts/Defante.ttf?v=2") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #FFFFFF;
+    --text: #333333;
+    --text-2: #808080;
+    --border: #B3B3B3;
+    --surface: #F2F2F2;
+    --accent: #FF0534;
+    --footer: #333333;
+
+    --title: "Defante", "Fredoka", system-ui, sans-serif;
+    --body: "Lato", system-ui, sans-serif;
+
+    --page-max: 1100px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --sec: clamp(56px, 8vw, 92px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .narrow { max-width: 760px; }
+
+  /* ===== Page transitions ===== */
+  @media (prefers-reduced-motion: no-preference) {
+    body { animation: pageIn 0.22s ease both; }
+  }
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+  html.leaving body { opacity: 0; transition: opacity 0.13s ease; }
+
+  /* ===================== NAVBAR ===================== */
+  .nav {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+  }
+  .nav a {
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: var(--text-2);
+    padding: 8px 17px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--text); font-weight: 700; background: #fff; }
+
+  /* ===================== SHARED ===================== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 7px 15px;
+    border-radius: 999px;
+    line-height: 1;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: transform 0.18s ease, filter 0.18s ease;
+  }
+  .cta:hover { transform: translateY(-2px) scale(1.02); filter: brightness(0.93); }
+  .cta:active { transform: translateY(0) scale(0.98); }
+  .cta .chev {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 999px;
+    background: #fff; color: var(--accent); font-size: 11px;
+    transition: transform 0.18s ease;
+  }
+  .cta:hover .chev { transform: translateX(4px); }
+
+  .accent-em { color: var(--accent); font-weight: 700; }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  .sec-title {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(28px, 3.6vw, 42px);
+    letter-spacing: -0.5px;
+    line-height: 1.04;
+    margin: 0 0 18px;
+  }
+  .body-text {
+    font-size: clamp(16.5px, 1.4vw, 19px);
+    line-height: 1.7;
+    color: #474747;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .body-text + .body-text { margin-top: 16px; }
+
+  /* image placeholders (real images replace these later) */
+  .ph {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: var(--surface);
+  }
+  .ph image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ph image-slot::part(button) { border-radius: 0; }
+  .ph > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* empty-state label shown until a real image is dropped in */
+  .ph-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-2);
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(0,0,0,0.018) 14px, rgba(0,0,0,0.018) 28px),
+      var(--surface);
+    border: 1.5px dashed #cfcfcf;
+  }
+  .ph-empty .ph-label {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.3px;
+    padding: 16px;
+  }
+  .ph-empty .ph-label i { font-size: 26px; color: var(--border); }
+
+  /* ===== Image lightbox / zoom ===== */
+  .zoom-btn {
+    position: absolute; top: 12px; right: 12px; z-index: 6;
+    width: 40px; height: 40px; border-radius: 999px;
+    background: rgba(0,0,0,.42); color: #fff; border: none;
+    display: none; align-items: center; justify-content: center;
+    font-size: 15px; cursor: zoom-in; backdrop-filter: blur(4px);
+    opacity: 0; transform: scale(.92);
+    transition: opacity .22s ease, transform .22s ease, background .2s ease;
+  }
+  .zoomable.has-img > .zoom-btn { display: flex; }
+  .zoomable.has-img:hover > .zoom-btn,
+  .zoom-btn:focus-visible { opacity: 1; transform: scale(1); }
+  .zoom-btn:hover { background: var(--accent); }
+  @media (hover: none) {
+    .zoomable.has-img > .zoom-btn { opacity: 1; transform: scale(1); }
+  }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(18,18,18,.95);
+    display: none; align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lb-stage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .lightbox img {
+    max-width: 92vw; max-height: 90vh; object-fit: contain;
+    transform-origin: center center;
+    cursor: zoom-in; user-select: none; -webkit-user-drag: none; touch-action: none;
+  }
+  .lightbox.zoomed img { cursor: grab; }
+  .lb-close {
+    position: absolute; top: 20px; right: 24px; z-index: 2;
+    width: 46px; height: 46px; border-radius: 999px;
+    background: rgba(255,255,255,.12); color: #fff; border: none;
+    font-size: 26px; line-height: 1; cursor: pointer;
+    transition: background .2s ease;
+  }
+  .lb-close:hover { background: var(--accent); }
+  .lb-hint {
+    position: absolute; bottom: 22px; left: 0; right: 0; text-align: center;
+    color: rgba(255,255,255,.55); font-size: 13px; font-weight: 700; letter-spacing: .3px;
+    pointer-events: none;
+  }
+
+  /* reveal on scroll */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: revealUp 0.7s ease both; }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ===================== CASE HERO ===================== */
+  .case-hero { padding-bottom: var(--sec); }
+  .case-hero-media {
+    position: relative;
+    width: 100%;
+    height: clamp(320px, 58vh, 660px);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .case-hero-media image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .case-hero-media image-slot::part(button) { border-radius: 0; }
+  .case-hero-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .case-hero-copy { padding-top: clamp(34px, 4.5vw, 56px); }
+  .case-hero-copy .back-link { margin-bottom: 18px; }
+  .case-hero-copy .card-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+  .case-hero-copy h1 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(40px, 6.6vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.9px;
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .case-hero-copy .lead {
+    font-size: clamp(17px, 1.6vw, 22px);
+    line-height: 1.6;
+    color: #474747;
+    max-width: 64ch;
+    margin: 0 0 24px;
+    text-wrap: pretty;
+  }
+  .meta-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .meta-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 9px 17px;
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+  }
+  .meta-tag i { color: var(--accent); font-size: 13px; }
+
+  /* ===================== TWO-COLUMN (context/objective) ===================== */
+  .block { padding-block: calc(var(--sec) * 0.5); }
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(20px, 2.6vw, 28px);
+  }
+  .info-card {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: clamp(26px, 3.2vw, 40px);
+  }
+  .info-card h3 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(21px, 2.2vw, 27px);
+    letter-spacing: -0.3px;
+    margin: 0 0 14px;
+  }
+  .obj-list { list-style: none; margin: 0; padding: 0; }
+  .obj-list li {
+    position: relative;
+    padding-left: 30px;
+    font-size: clamp(15.5px, 1.3vw, 17px);
+    line-height: 1.55;
+    color: #474747;
+    margin-bottom: 14px;
+  }
+  .obj-list li:last-child { margin-bottom: 0; }
+  .obj-list li i {
+    position: absolute; left: 0; top: 2px;
+    color: var(--accent); font-size: 16px;
+  }
+  .obj-list li strong { color: var(--text); font-weight: 700; }
+
+  /* ===================== SOLUTION ===================== */
+  .solution .body-text { margin-bottom: clamp(28px, 4vw, 40px); }
+  .showcase { aspect-ratio: 21 / 9; }
+
+  /* ===================== INSIGHTS / ARCHETYPES ===================== */
+  .insight-list { list-style: none; margin: clamp(24px,3vw,34px) 0 0; padding: 0; display: flex; flex-direction: column; gap: clamp(18px,2.2vw,26px); }
+  .insight-list li { padding-left: 30px; position: relative; }
+  .insight-list li::before { content: ""; position: absolute; left: 0; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  .insight-list h4 { font-family: var(--title); font-weight: 600; font-size: clamp(17px,1.7vw,20px); letter-spacing: -0.2px; margin: 0 0 6px; }
+  .insight-list p { font-size: clamp(15px,1.3vw,17px); line-height: 1.6; color: #474747; margin: 0; }
+  .archetype-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,2vw,22px); margin-top: clamp(26px,3vw,38px); }
+  .archetype-card { background: var(--surface); border-radius: 22px; padding: clamp(22px,2.4vw,30px); }
+  .archetype-card h3 { font-family: var(--title); font-weight: 600; font-size: clamp(17px,1.6vw,20px); letter-spacing: -0.2px; margin: 0 0 8px; }
+  .archetype-card p { font-size: 14.5px; line-height: 1.5; color: var(--text-2); margin: 0; }
+  @media (max-width: 820px) { .archetype-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .archetype-grid { grid-template-columns: 1fr; } }
+
+  /* ===================== ROLE CARDS ===================== */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2vw, 22px);
+    margin-top: clamp(26px, 3vw, 38px);
+  }
+  .role-card {
+    background: var(--surface);
+    border-radius: 22px;
+    padding: clamp(22px, 2.4vw, 30px);
+    transition: transform 0.22s ease;
+  }
+  .role-card:hover { transform: translateY(-4px); }
+  .role-icon {
+    color: var(--text);
+    font-size: 28px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .role-card h3 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(17px, 1.6vw, 20px);
+    letter-spacing: -0.2px;
+    margin: 0 0 8px;
+  }
+  .role-card p {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-2);
+    margin: 0;
+  }
+
+  /* ===================== PROCESS ===================== */
+  .process .body-text { margin-bottom: clamp(28px, 4vw, 40px); }
+  .process-stack { display: flex; flex-direction: column; gap: clamp(18px, 2.4vw, 28px); }
+  .process-item .p-label {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--title); font-weight: 600;
+    font-size: clamp(18px, 1.8vw, 23px);
+    letter-spacing: -0.3px;
+    margin: 0 0 14px;
+  }
+  .flows { aspect-ratio: 16 / 11; }
+  .wires { aspect-ratio: 16 / 11; }
+
+  /* ===================== OUTCOME ===================== */
+  .outcome-card {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: clamp(34px, 5vw, 64px);
+  }
+  .outcome-card .body-text { font-size: clamp(17px, 1.5vw, 21px); max-width: 60ch; }
+  .goal-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+    margin-top: clamp(28px, 3.4vw, 40px);
+  }
+  .goal {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 24px 22px;
+  }
+  .goal i { color: var(--accent); font-size: 27px; margin-bottom: 12px; display: block; }
+  .goal h4 {
+    font-family: var(--title); font-weight: 600;
+    font-size: clamp(16px, 1.5vw, 19px);
+    letter-spacing: -0.2px;
+    margin: 0 0 6px;
+  }
+  .goal p { font-size: 14px; line-height: 1.5; color: var(--text-2); margin: 0; }
+
+  /* ===================== FOOTER ===================== */
+  .footer {
+    background: var(--footer);
+    color: #fff;
+    text-align: center;
+    padding: clamp(64px, 9vw, 100px) 0 clamp(72px, 10vw, 108px);
+    margin-top: var(--sec);
+  }
+  .footer h2 {
+    font-family: var(--title);
+    font-weight: 600;
+    font-size: clamp(34px, 5.2vw, 66px);
+    line-height: 1.04;
+    letter-spacing: -0.6px;
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+  .back-link {
+    position: fixed;
+    top: 22px;
+    left: var(--gutter);
+    z-index: 49;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-weight: 700; font-size: 14px;
+    color: var(--text-2);
+    padding: 11px 18px 11px 16px;
+    border-radius: 999px;
+    background: rgba(242, 242, 242, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: color 0.2s ease, gap 0.2s ease, background 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); gap: 13px; background: #fff; }
+  @media (max-width: 600px) {
+    .back-link {
+      position: static;
+      display: inline-flex;
+      margin: 0 0 14px;
+      top: auto; left: auto;
+      font-size: 13px;
+      padding: 9px 15px 9px 13px;
+    }
+    .case-hero-copy { padding-top: clamp(20px, 3vw, 30px); }
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 820px) {
+    .role-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .duo { grid-template-columns: 1fr; }
+    .goal-row { grid-template-columns: 1fr; }
+    .showcase { aspect-ratio: 4 / 3; }
+    .flows, .wires { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 600px) {
+    .role-grid { grid-template-columns: 1fr; }
+    .nav { gap: 2px; padding: 5px 6px; top: 16px; }
+    .nav a { font-size: 13.5px; padding: 7px 13px; }
+  }
+  @media (max-width: 380px) {
+    .nav a { font-size: 12.5px; padding: 6px 10px; }
+  }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ===== onboarding-platform case ===== */
+  .case-hero-media > img.hero-shot { object-fit: contain; }
+  .ph.shot { aspect-ratio: auto; }
+  .ph.shot > img { position: static; display: block; width: 100%; height: auto; }
+  .caption { margin: 10px 2px 0; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+  .flow { list-style: none; margin: 4px 0 0; padding: 0; display: flex; gap: 18px; }
+  .flow-col { flex-direction: column; }
+  .flow-row { flex-wrap: wrap; align-items: stretch; margin-top: 6px; }
+  .flow-step { position: relative; background: var(--bg); border: 0; border-radius: 22px; padding: clamp(18px, 2vw, 24px) clamp(20px, 2.2vw, 28px); font-family: var(--title); font-weight: 600; font-size: clamp(19px, 1.6vw, 22px); line-height: 1.15; color: var(--text); }
+  .flow-step span { display: block; font-family: var(--body); font-weight: 400; font-size: 16px; line-height: 1.4; color: var(--text-2); margin-top: 6px; }
+  .flow-step.is-hot span { color: var(--accent); }
+  .flow-col .flow-step + .flow-step::before { content: "↓"; position: absolute; top: -16px; left: 28px; font-family: var(--body); font-size: 13px; line-height: 1; color: var(--text-2); }
+  .flow-row .flow-step { flex: 1 1 150px; background: var(--surface); }
+  .split { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 2vw, 24px); align-items: center; margin-top: clamp(26px, 3vw, 38px); }
+  .split-60 { margin-top: 0; }
+  .quad-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.45; color: #474747; }
+  .quad-list strong { color: var(--text); }
+  .ba-table { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--surface); border-radius: 22px; padding: clamp(18px, 2.4vw, 28px); column-gap: clamp(16px, 2.4vw, 32px); }
+  .ba-table > div { padding: 14px 0; border-top: 1px solid #dcdcdc; font-size: 16px; line-height: 1.45; color: #474747; }
+  .ba-table > .ba-head { border-top: 0; padding-top: 0; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--accent); }
+  .ba-table > div:nth-child(4n+4), .ba-table > div:nth-child(2) { color: var(--text); font-weight: 700; }
+  .dark-band { background: var(--footer); color: #fff; border-radius: 22px; padding: clamp(28px, 4vw, 56px); }
+  .dark-band .sec-title { color: #fff; }
+  .dark-band .body-text { color: #d9d9d9; max-width: 68ch; }
+  .dark-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); margin: clamp(22px, 3vw, 34px) 0; }
+  .dark-stats b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.6vw, 64px); line-height: 1; color: var(--accent); letter-spacing: -1px; }
+  .dark-stats span { display: block; margin-top: 10px; font-size: 15px; color: #fff; }
+  .next-case { display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(26px, 3vw, 38px); font-size: 18px; color: var(--text); text-decoration: none; }
+  .next-case strong { color: var(--accent); }
+  @media (max-width: 860px) {
+    .split, .dark-stats { grid-template-columns: 1fr; }
+    .ba-table { grid-template-columns: 1fr 1fr; }
+  }
+
+  .solution-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); }
+  .sub-title { margin: 0 0 18px; font-family: var(--title); font-weight: 600; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; color: var(--text); }
+  .exp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); margin: 0 0 clamp(20px, 2.6vw, 28px); }
+  .exp-grid > div { background: rgba(255,255,255,.07); border-radius: 16px; padding: clamp(16px, 2vw, 22px); }
+  .exp-grid p { margin: 0; font-size: 16px; line-height: 1.45; color: #f2f2f2; }
+  .exp-grid .eyebrow { margin-bottom: 8px; }
+  @media (max-width: 860px) { .solution-duo, .exp-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/work/" class="active">Work</a>
+    <a href="/about/">About</a>
+    <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
+  </nav>
+
+  <main>
+
+    <!-- ===================== CASE HERO ===================== -->
+    <section class="case-hero">
+      <div class="case-hero-media reveal">
+        <img src="../assets/op-hero-wide.webp" alt="The platform's onboarding analytics on a laptop, next to an onboarding slide on a phone" />
+      </div>
+      <div class="wrap case-hero-copy">
+        <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
+        <div class="card-tags reveal">
+          <span class="tag">Product Design</span>
+          <span class="tag">Experimentation</span>
+          <span class="tag">CRO</span>
+          <span class="tag">Analytics</span>
+        </div>
+        <h1 class="reveal">Onboarding Experimentation Platform</h1>
+        <p class="lead reveal">Designing the internal tool that lets a growth team build, measure and A/B test the top of a subscription funnel — without a developer.</p>
+        <div class="meta-tags reveal">
+          <span class="meta-tag"><i class="fa-solid fa-user-pen"></i> Product Designer · Analytics &amp; experimentation lead</span>
+          <span class="meta-tag"><i class="fa-solid fa-building"></i> 1 developer · 1 content lead · infra · team lead</span>
+          <span class="meta-tag"><i class="fa-solid fa-clock"></i> 06.26 → present</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== KEY NUMBERS ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>0</b><span>developer tickets to ship a variant</span></div>
+          <div class="stat"><b>95%</b><span>probability needed to call a winner</span></div>
+          <div class="stat"><b>10%</b><span>minimum detectable effect by default</span></div>
+          <div class="stat"><b>A/A</b><span>test before any real experiment</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 01 CONTEXT ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="duo">
+          <div class="info-card reveal">
+            <p class="eyebrow">01 — Context</p>
+            <h3>A funnel that lives before the app</h3>
+            <p class="body-text">People click a paid ad, take a short web quiz, subscribe through carrier billing or a web checkout — and only then download the app. Campaign UTMs travel all the way, so every subscription traces back to its ad.</p>
+            <p class="body-text">That quiz is the first product experience, and the one with the biggest drop-off.</p>
+          </div>
+          <div class="info-card reveal">
+            <p class="eyebrow">The funnel</p>
+            <ol class="flow flow-col" aria-label="Acquisition funnel">
+              <li class="flow-step">Paid ad <span>campaign UTMs</span></li>
+              <li class="flow-step is-hot">Web quiz <span>biggest drop-off</span></li>
+              <li class="flow-step">Subscription <span>carrier billing or web checkout</span></li>
+              <li class="flow-step">App download</li>
+            </ol>
+            <p class="caption">The web onboarding sits between the ad and the app.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 02 PROBLEM ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">02 — The problem</p>
+          <h2 class="sec-title">Every change needed a developer</h2>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div class="role-card reveal">
+            <h3>Slow iteration</h3>
+            <p>A new headline meant a ticket and a deploy, so ideas rarely got tested.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>No way to compare</h3>
+            <p>Without experiments, decisions came from opinion: better, or just different?</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Fragmented data</h3>
+            <p>Aggregate traffic only — nothing tied a session to the version it saw.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 03 ROLE ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">03 — My role</p>
+          <h2 class="sec-title">Every screen, plus how it measures and tests</h2>
+          <div class="meta-tags">
+            <span class="meta-tag">Figma</span>
+            <span class="meta-tag">GA4</span>
+            <span class="meta-tag">Firebase</span>
+            <span class="meta-tag">BigQuery</span>
+            <span class="meta-tag">Looker Studio</span>
+          </div>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div class="role-card reveal">
+            <h3>All screens &amp; flows</h3>
+            <p>Builder, copy editing, analytics, experiments, sessions, activity log.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Analytics view</h3>
+            <p>Where, when and why people drop off — by campaign.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>A/B testing</h3>
+            <p>End to end, from hypothesis to promoting a winner.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Measurement plan</h3>
+            <p>Events, parameters, KPIs and UTM-based filters.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Results panel</h3>
+            <p>Built from scratch together with the developer.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>QA &amp; roadmap</h3>
+            <p>Instrumentation QA and the post-MVP roadmap.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BUILDER ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">04 — The builder</p>
+          <h2 class="sec-title">No code to ship a variant — measurement built in</h2>
+          <p class="body-text">The team assembles each onboarding slide by slide on a live phone preview. Tracking isn't an afterthought: it lives in the same panel as the content.</p>
+        </div>
+        <div class="split reveal">
+          <div class="ph shot">
+            <img src="../assets/op-builder.webp" alt="Onboarding builder: slide list, live phone preview and a settings panel with measurement fields" />
+          </div>
+          <div class="info-card">
+            <p class="eyebrow">What a variant is made of</p>
+            <ul class="quad-list">
+              <li><strong>Stages &amp; slides</strong> — the progress bar, in order.</li>
+              <li><strong>Modules</strong> — text, options, images, reviews.</li>
+              <li><strong>Branches</strong> — slides that appear by answer.</li>
+              <li><strong>Languages</strong> — one structure, several copies.</li>
+              <li><strong>Measurement</strong> — a GA4 name per slide and the lead event for the ad pixel.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="caption">Content and tracking edited side by side, so no variant ships unmeasured.</p>
+      </div>
+    </section>
+
+    <!-- ===================== TEAM ONBOARDING ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">05 — Onboarding the team</p>
+          <h2 class="sec-title">A tool for onboardings needed its own onboarding</h2>
+          <p class="body-text">The content team had to ship on their own from day one. So the tool got its own activation: an 8-step tour on first use and a guide one click away.</p>
+        </div>
+        <div class="solution-duo reveal">
+          <div class="ph shot"><img src="../assets/op-tour.webp" alt="First-use product tour highlighting one part of the builder per step" /></div>
+          <div class="ph shot"><img src="../assets/op-guide.webp" alt="In-context guide explaining how to build an onboarding in five steps" /></div>
+        </div>
+        <p class="caption">Left: one of the eight tour steps. Right: the guide, always behind the ⓘ.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 04 MEASUREMENT FIRST ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="duo">
+          <div class="info-card reveal">
+            <p class="eyebrow">06 — Measurement first</p>
+            <h3>If you can't measure it, don't test it</h3>
+            <p class="body-text">Before drawing a screen, I defined how an experiment gets counted. GA4 covers the aggregate funnel; Firebase and our database keep each journey, from ad to subscription.</p>
+            <p class="body-text">Assignment is sticky: the same visitor always sees the same version.</p>
+          </div>
+          <div class="info-card reveal">
+            <p class="eyebrow">How a visit is counted</p>
+            <ol class="flow flow-col" aria-label="Measurement model">
+              <li class="flow-step">Visitor arrives <span>with campaign UTMs</span></li>
+              <li class="flow-step is-hot">Variant assigned <span>sticky across reloads</span></li>
+              <li class="flow-step">Every event carries <span>experiment ID · variant · UTMs</span></li>
+              <li class="flow-step">GA4 funnel + Firebase/DB journey</li>
+            </ol>
+            <p class="caption">Every event carries the experiment and the variant.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 05 ANALYTICS ===================== -->
+    <section class="block solution">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">07 — Onboarding analytics</p>
+          <h2 class="sec-title">One screen to see where, when and why people leave</h2>
+          <p class="body-text">Unique people, refreshed during the day, cut by date, version and four UTM filters — any chart can be read for a single ad.</p>
+        </div>
+        <div class="ph shot reveal">
+          <img src="../assets/op-analytics.webp" alt="Analytics view: stage flow, top drop-off slides, time per slide and the time × drop-off quadrant" />
+        </div>
+        <p class="caption">One view per onboarding, filterable by campaign UTMs.</p>
+        <div class="role-grid" style="margin-top: clamp(26px, 3vw, 38px);">
+          <div class="role-card reveal">
+            <h3>How many finish</h3>
+            <p>A bar per slide, grouped by stage, and the stage that loses most.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Where &amp; how long</h3>
+            <p>Top drop-off slides with their copy; the three slowest marked.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Why they leave</h3>
+            <p>Every slide on time × drop-off. The quadrant names the fix.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>What they doubt</h3>
+            <p>Back-navigation per slide; split by audience, origin and device.</p>
+          </div>
+        </div>
+        <div class="split reveal">
+          <div class="ph shot">
+            <img src="../assets/op-quadrant.webp" alt="Quadrant placing every slide by time spent and drop-off, next to the back-navigation ranking" />
+          </div>
+          <div class="info-card">
+            <p class="eyebrow">Reading the quadrant</p>
+            <ul class="quad-list">
+              <li><strong>Disinterest</strong> — little time, they leave: explain, move or cut it.</li>
+              <li><strong>Friction</strong> — a lot of time, they leave: simplify it.</li>
+              <li><strong>Attention</strong> — a lot of time, they stay: keep an eye on it.</li>
+              <li><strong>Flow</strong> — little time, they stay: don't touch it.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="caption">Every slide placed on time spent and drop-off. The quadrant tells you what to do with it.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 06 A/B MODULE ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">08 — Designing the A/B testing module</p>
+          <h2 class="sec-title">From hypothesis to launch in four steps</h2>
+          <p class="body-text">Modeled loosely on how RevenueCat runs paywall experiments, adapted to multi-step onboardings.</p>
+        </div>
+        <div class="ph shot reveal">
+          <img src="../assets/op-wizard.webp" alt="New experiment screen: variants with traffic split, audience, decision metric and estimated duration" />
+        </div>
+        <p class="caption">Creating an experiment, from hypothesis to launch.</p>
+        <div class="role-grid" style="margin-top: clamp(26px, 3vw, 38px);">
+          <div class="role-card reveal">
+            <h3>1 · Hypothesis</h3>
+            <p>What you expect to change and why; up to four variants.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>2 · Audience</h3>
+            <p>Who enters and how traffic splits.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>3 · Metrics</h3>
+            <p>Primary metric and minimum sample before reading.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>4 · Launch</h3>
+            <p>One last check before going live.</p>
+          </div>
+        </div>
+        <div class="narrow reveal" style="margin-inline:0; margin-top: clamp(30px, 3.4vw, 44px);">
+          <p class="eyebrow">Guardrails by default</p>
+          <h3 class="sub-title">Rigor the team doesn't have to remember</h3>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+          <div class="role-card reveal">
+            <h3>New visitors only</h3>
+            <p>People who already saw the onboarding don't skew it.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Ramp the traffic</h3>
+            <p>Start with a portion; the rest sees the control.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>95% to win · 10% minimum lift</h3>
+            <p>Set before launch, not after peeking.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Minimum sample</h3>
+            <p>No result until each variant has enough people.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>A full week</h3>
+            <p>Duration estimated from the control's real completion.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>One test at a time</h3>
+            <p>Variants locked while it runs; the winner becomes the control.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 07 RESULTS ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="split split-60 reveal">
+          <div class="ph shot">
+            <img src="../assets/op-results.webp" alt="Experiment results: each variant's starts, completions and the primary metric, with a daily completion chart" />
+          </div>
+          <div class="info-card">
+            <p class="eyebrow">09 — Reading results</p>
+            <h3>Results that state facts, not conclusions</h3>
+            <p class="body-text">Difference and probability of being better up front; the confidence range on hover.</p>
+            <p class="body-text">Insights read like “Variant B lost more users on slide 3 than A” — never a recommendation. The team makes the call.</p>
+          </div>
+        </div>
+        <p class="caption">Difference and probability up front; confidence range on hover.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 08 ITERATING WITH DEV ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">10 — Iterating with development</p>
+          <h2 class="sec-title">The developer's feedback made it better</h2>
+          <p class="body-text">I reviewed the wireframes with the developer early. Four changes came out of it:</p>
+        </div>
+        <div class="ba-table reveal">
+          <div class="ba-head">Before</div>
+          <div class="ba-head">After</div>
+          <div>Completion = reaching the last slide</div>
+          <div>Completion = finishing the onboarding, since flows branch</div>
+          <div>Two overlapping redirect metrics</div>
+          <div>One metric, no duplicates</div>
+          <div>Confidence range always visible</div>
+          <div>Difference and probability by default, range on hover</div>
+          <div>Insights suggested what to do</div>
+          <div>Insights only state what happened</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 09 ROLLOUT ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="narrow reveal" style="margin-inline:0;">
+          <p class="eyebrow">11 — Rollout</p>
+          <h2 class="sec-title">An A/A test before any real experiment</h2>
+        </div>
+        <ol class="flow flow-row reveal" aria-label="Rollout phases">
+          <li class="flow-step">Definitions</li>
+          <li class="flow-step">Assignment &amp; measurement</li>
+          <li class="flow-step is-hot">A/A test <span>the gate</span></li>
+          <li class="flow-step">Experiment creation</li>
+          <li class="flow-step">Results</li>
+          <li class="flow-step">Closing the loop</li>
+        </ol>
+        <p class="caption">Same onboarding in both variants, to prove the measurement shows no false differences.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 10 WHERE IT IS NOW ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="dark-band reveal">
+          <p class="eyebrow">12 — Where it is now</p>
+          <h2 class="sec-title">Live and learning</h2>
+          <div class="dark-stats">
+            <div><b>10.26</b><span>Technical MVP shipped</span></div>
+            <div><b>8</b><span>Experiments run, counting the A/A</span></div>
+            <div><b>−22%</b><span>Drop-off after the first round of fixes</span></div>
+          </div>
+          <div class="exp-grid">
+            <div><p class="eyebrow">First test · Hypothesis</p><p>A concrete benefit on slide 1 beats an emotional hook — people get what they receive for answering.</p></div>
+            <div><p class="eyebrow">Primary metric</p><p>Reached slide 2 ÷ saw slide 1. Guardrails: completion and sign-ups at the destination.</p></div>
+            <div><p class="eyebrow">The call</p><p>Validated first with simulated users, then stopped before the minimum sample — no winner declared on thin data.</p></div>
+          </div>
+          <p class="body-text">Next: the three slides with the most drop-off, starting with whether asking for an email is worth what it costs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 11 WHAT I LEARNED ===================== -->
+    <section class="block">
+      <div class="wrap">
+        <div class="outcome-card reveal">
+          <p class="eyebrow">13 — What I learned</p>
+          <h2 class="sec-title">What I'd take to the next project</h2>
+          <div class="goal-row">
+            <div class="goal">
+              <i class="ti ti-target-arrow"></i>
+              <h4>Measurement before screens</h4>
+              <p>The results view is only as good as the events behind it.</p>
+            </div>
+            <div class="goal">
+              <i class="ti ti-sitemap"></i>
+              <h4>Metrics against real flows</h4>
+              <p>“Reaching the last slide” sounded right until branching broke it.</p>
+            </div>
+            <div class="goal">
+              <i class="ti ti-sparkles"></i>
+              <h4>Let people decide</h4>
+              <p>A tool that states facts earns more trust than one that tells you what to think.</p>
+            </div>
+          </div>
+        </div>
+        <a class="next-case reveal" href="/kibitanalytics/">Next case: <strong>Making Data Legible</strong> <i class="fa-solid fa-arrow-right-long"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER BAND ===================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <h2>Design that feels right — and data that proves it.</h2>
+      <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
+    </div>
+  </footer>
+
+  <script src="../image-slot.js"></script>
+  <script>
+    /* ---------- Image lightbox: click to open fullscreen, scroll/click to zoom, drag to pan ---------- */
+    (function () {
+      const lb = document.createElement("div");
+      lb.className = "lightbox";
+      lb.innerHTML = '<button class="lb-close" aria-label="Close">\u00d7</button>' +
+        '<div class="lb-stage"><img alt=""></div>' +
+        '<div class="lb-hint">Scroll or click to zoom \u00b7 drag to pan \u00b7 Esc to close</div>';
+      document.body.appendChild(lb);
+      const lbImg = lb.querySelector("img");
+      const stage = lb.querySelector(".lb-stage");
+      let scale = 1, tx = 0, ty = 0, dragging = false, sx = 0, sy = 0, moved = false;
+      function apply() { lbImg.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")"; lb.classList.toggle("zoomed", scale > 1.01); }
+      function reset() { scale = 1; tx = 0; ty = 0; apply(); }
+      function open(src) { if (!src) return; lbImg.src = src; reset(); lb.classList.add("open"); document.documentElement.style.overflow = "hidden"; }
+      function close() { lb.classList.remove("open"); document.documentElement.style.overflow = ""; lbImg.src = ""; }
+      lb.querySelector(".lb-close").addEventListener("click", close);
+      lb.addEventListener("click", (e) => { if (e.target === lb || e.target === stage) close(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && lb.classList.contains("open")) close(); });
+      stage.addEventListener("wheel", (e) => { e.preventDefault(); scale = Math.min(6, Math.max(1, scale * (e.deltaY < 0 ? 1.15 : 0.87))); if (scale === 1) { tx = 0; ty = 0; } apply(); }, { passive: false });
+      lbImg.addEventListener("click", (e) => { e.stopPropagation(); if (moved) { moved = false; return; } if (scale > 1.01) reset(); else { scale = 2.4; apply(); } });
+      lbImg.addEventListener("pointerdown", (e) => { if (scale <= 1.01) return; dragging = true; moved = false; sx = e.clientX - tx; sy = e.clientY - ty; lbImg.setPointerCapture(e.pointerId); });
+      lbImg.addEventListener("pointermove", (e) => { if (!dragging) return; tx = e.clientX - sx; ty = e.clientY - sy; moved = true; apply(); });
+      lbImg.addEventListener("pointerup", () => { dragging = false; });
+      function srcOf(c) {
+        const img = c.querySelector(":scope > img");
+        if (img && img.getAttribute("src")) return img.src;
+        const slot = c.querySelector("image-slot");
+        if (slot) { const si = slot.shadowRoot && slot.shadowRoot.querySelector("img"); if (si && si.src) return si.src; if (slot._userUrl) return slot._userUrl; }
+        return null;
+      }
+      const containers = document.querySelectorAll(".case-hero-media, .ph");
+      containers.forEach((c) => {
+        c.classList.add("zoomable");
+        const btn = document.createElement("button");
+        btn.className = "zoom-btn"; btn.type = "button"; btn.setAttribute("aria-label", "Zoom image");
+        btn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>';
+        c.appendChild(btn);
+        btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); open(srcOf(c)); });
+        const img = c.querySelector(":scope > img");
+        if (img) { img.style.cursor = "zoom-in"; img.addEventListener("click", (e) => { e.preventDefault(); open(img.src); }); }
+      });
+      function refresh() { containers.forEach((c) => c.classList.toggle("has-img", !!srcOf(c))); }
+      refresh(); setInterval(refresh, 1000);
+    })();
+  </script>
+  <script>
+    /* ---------- Back link: point to wherever the user actually came from ---------- */
+    (() => {
+      const link = document.getElementById("back-link");
+      if (!link || !document.referrer) return;
+      try {
+        const ref = new URL(document.referrer);
+        if (ref.origin !== location.origin || ref.pathname === location.pathname) return;
+        let path = ref.pathname.replace(/index\.html$/, "");
+        if (!path.endsWith("/")) path += "/";
+        const names = { "/": "Home", "/work/": "Work", "/about/": "About" };
+        const label = names[path];
+        if (!label) return;
+        link.href = path + ref.hash;
+        link.querySelector(".back-label").textContent = label;
+      } catch (e) {}
+    })();
+  </script>
+  <script>
+    /* ---------- Reveal on scroll: above-the-fold instant, below-fold animates in ---------- */
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const sibs = [...e.target.parentElement.querySelectorAll(":scope > .reveal")];
+            e.target.style.animationDelay = (Math.min(Math.max(sibs.indexOf(e.target), 0), 5) * 60) + "ms";
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        io.observe(el);
+      });
+    }
+
+    /* ---------- Snappy fade-out on internal navigation ---------- */
+    document.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a[href]");
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0 || a.target === "_blank") return;
+      const hrefAttr = a.getAttribute("href") || "";
+      if (hrefAttr.startsWith("#") || hrefAttr.startsWith("mailto:") || hrefAttr.startsWith("http") || hrefAttr.startsWith("javascript:")) return;
+      const url = new URL(a.getAttribute("href"), location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      ev.preventDefault();
+      document.documentElement.classList.add("leaving");
+      setTimeout(() => { location.href = a.href; }, 120);
+    });
+  </script>
+</body>
+</html>

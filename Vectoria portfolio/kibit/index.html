@@ -509,6 +509,13 @@
   @media (max-width: 380px) {
     .nav a { font-size: 12.5px; padding: 6px 10px; }
   }
+
+  /* key numbers row */
+  .stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .stat { background: var(--surface); border-radius: 22px; padding: clamp(20px, 2.4vw, 28px); }
+  .stat b { display: block; font-family: var(--title); font-weight: 600; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; letter-spacing: -1px; color: var(--accent); }
+  .stat span { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; color: #474747; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
 <body>
@@ -519,6 +526,7 @@
     <a href="/work/" class="active">Work</a>
     <a href="/about/">About</a>
     <a href="https://www.linkedin.com/in/mvmdc/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+    <a href="/Victoria-Molina-de-Castro-CV.pdf" target="_blank" rel="noopener" download>CV</a>
   </nav>
 
   <main>
@@ -530,7 +538,8 @@
       <div class="wrap case-hero-copy">
         <a href="/work/" id="back-link" class="back-link reveal"><i class="fa-solid fa-arrow-left"></i> Back to <span class="back-label">Work</span></a>
         <div class="card-tags reveal">
-          <span class="tag">UX / UI</span>
+          <span class="tag">0-to-1</span>
+          <span class="tag">Subscription app</span>
           <span class="tag">Product Design</span>
         </div>
         <h1 class="reveal">Kibit — Big ideas, in minutes</h1>
@@ -544,24 +553,33 @@
       </div>
     </section>
 
+    <section class="block">
+      <div class="wrap">
+        <div class="stat-row reveal">
+          <div class="stat"><b>0→1</b><span>from a blank page to launch</span></div>
+          <div class="stat"><b>2</b><span>stores: App Store and Google Play</span></div>
+          <div class="stat"><b>3</b><span>paywalls, one visual family</span></div>
+          <div class="stat"><b>1st</b><span>subscription app for the company</span></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== CONTEXT & OBJECTIVE ===================== -->
     <section class="block">
       <div class="wrap">
         <div class="duo">
           <div class="info-card reveal">
             <p class="eyebrow">Context &amp; challenge</p>
-            <h3>The challenge</h3>
-            <p class="body-text">Kibit is a reading and personal-growth app — book summaries you can finish in about ten minutes, built from short modules, key facts, audiobooks, and expert-curated plans. (The name comes from “key bit”: the essential piece of information.)</p>
-            <p class="body-text">The company behind it came from the VAS world — value-added services billed through carrier portals. Kibit was its move into a completely different model: a real app, in the stores, with subscriptions, acquisition campaigns, and ASO. The challenge wasn’t just designing screens; it was designing a product for a business model the company had never operated in before.</p>
+            <h3>A new business model</h3>
+            <p class="body-text">Book summaries you finish in ten minutes. The company came from carrier-billed services — Kibit was its first real app: stores, subscriptions, ASO. I wasn't just designing screens, but a product for a model it had never run.</p>
           </div>
           <div class="info-card reveal">
             <p class="eyebrow">Objective</p>
-            <h3>The objective</h3>
-            <p class="body-text">Define and design Kibit from a blank page: validate the niche, shape an MVP, and deliver a launch-ready product that could compete in the app stores and convert through a subscription funnel.</p>
+            <h3>From blank page to launch</h3>
             <ul class="obj-list">
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Validate the niche</strong> — confirm the opportunity and positioning.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Shape an MVP</strong> — define scope from the ground up.</li>
-              <li><i class="fa-solid fa-circle-check"></i> <strong>Launch-ready product</strong> — built to convert through a subscription funnel.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Validate</strong> the niche and positioning.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Shape</strong> an MVP from the ground up.</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Launch</strong> a product built to convert.</li>
             </ul>
           </div>
         </div>
@@ -574,7 +592,7 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">The solution</p>
           <h2 class="sec-title">A focused reading experience, built to convert</h2>
-          <p class="body-text">A focused reading experience built around short, memorable “kibits,” with personalized learning plans and a clear path from first session to subscription. The product launched on both the App Store and Google Play.</p>
+          <p class="body-text">Short, memorable “kibits,” personalized plans and a clear path from first session to subscription.</p>
         </div>
       </div>
       <div class="wrap">
@@ -604,7 +622,7 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Visual identity &amp; assets</p>
           <h2 class="sec-title">A cohesive visual system</h2>
-          <p class="body-text">Beyond the screens, I shaped Kibit’s complete visual identity: a scalable design system with reusable components and modals, plus a custom set of assets — avatars, illustrations, and store visuals. This kept the product consistent as it grew and gave the brand a distinctive, cohesive look.</p>
+          <p class="body-text">A scalable design system plus custom avatars, illustrations and store visuals — consistent as the product grew.</p>
         </div>
         <div class="asset-grid">
           <div class="ph asset-card reveal"><image-slot id="kibit-asset-1" fit="contain" src="../assets/kibit-asset-1.webp?v=2" placeholder="Drop an asset"></image-slot></div>
@@ -623,7 +641,21 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Paywall system</p>
           <h2 class="sec-title">Designing the paywall system</h2>
-          <p class="body-text">I designed Kibit’s paywall system — a single visual family adapted to different moments in the funnel, each with its own pricing logic and messaging. The onboarding paywall introduces the free-week timeline after profiling; the content paywalls use emotional, benefit-driven copy to convert during browsing; and the gift offer wall presents a special discounted annual plan. Same look, different conversion strategy at each touchpoint.</p>
+          <p class="body-text">One visual family, a different conversion strategy at each moment of the funnel.</p>
+        </div>
+        <div class="role-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: clamp(26px, 3vw, 38px);">
+          <div class="role-card reveal">
+            <h3>Onboarding</h3>
+            <p>The free-week timeline, right after profiling.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Content</h3>
+            <p>Emotional, benefit-led copy while browsing.</p>
+          </div>
+          <div class="role-card reveal">
+            <h3>Gift offer</h3>
+            <p>A special discounted annual plan.</p>
+          </div>
         </div>
 
         <div class="ph showcase reveal">
@@ -637,37 +669,37 @@
       <div class="wrap">
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Role &amp; responsibilities</p>
-          <h2 class="sec-title">I led UX and UI across the full product lifecycle</h2>
+          <h2 class="sec-title">UX and UI across the full product lifecycle</h2>
         </div>
         <!-- Add or remove .role-card blocks freely — the grid reflows (max 4 per row). -->
         <div class="role-grid">
           <div class="role-card reveal">
             <h3>UX research</h3>
-            <p>Defined the niche and benchmarked competitors (Blinkist, Headway, Wiser) to position the product.</p>
+            <p>Niche definition and a Blinkist, Headway and Wiser benchmark.</p>
           </div>
           <div class="role-card reveal">
             <h3>MVP definition</h3>
-            <p>Shaped the product proposal and scope from the ground up.</p>
+            <p>Product proposal and scope.</p>
           </div>
           <div class="role-card reveal">
             <h3>User flows &amp; wireframes</h3>
-            <p>Designed the interaction architecture and low-fidelity flows.</p>
+            <p>Interaction architecture and low-fi flows.</p>
           </div>
           <div class="role-card reveal">
             <h3>High-fidelity UI</h3>
-            <p>Delivered the full visual design, launch-ready.</p>
+            <p>Full visual design, launch-ready.</p>
           </div>
           <div class="role-card reveal">
             <h3>Store assets</h3>
-            <p>Designed the product-page screenshots and visuals for the app stores.</p>
+            <p>Screenshots and visuals for both stores.</p>
           </div>
           <div class="role-card reveal">
             <h3>UI, design system &amp; assets</h3>
-            <p>Designed Kibit’s full visual language: UI components, modals, a scalable design system, and custom assets including avatars and illustrations.</p>
+            <p>Components, modals and custom assets.</p>
           </div>
           <div class="role-card reveal">
             <h3>Paywall system</h3>
-            <p>Designed a coherent set of paywalls with distinct pricing and messaging across the conversion funnel.</p>
+            <p>Distinct pricing and messaging across the funnel.</p>
           </div>
         </div>
       </div>
@@ -679,7 +711,7 @@
         <div class="narrow reveal" style="margin-inline:0;">
           <p class="eyebrow">Process</p>
           <h2 class="sec-title">From research to a monetization journey</h2>
-          <p class="body-text">The groundwork behind the product — a competitive analysis to position Kibit in a crowded category, and a mapped user journey toward subscription.</p>
+          <p class="body-text">A competitive analysis and a mapped journey toward subscription.</p>
         </div>
         <!-- Add more .process-item blocks as needed (each = label + image block). -->
         <div class="process-stack">
@@ -699,7 +731,7 @@
         <div class="outcome-card reveal">
           <p class="eyebrow">Outcome &amp; design goals</p>
           <h2 class="sec-title">Shipped to both stores</h2>
-          <p class="body-text">Kibit shipped to both app stores — the company’s first product in the subscription-app model. The design was built around clear success criteria.</p>
+          <p class="body-text">The company's first subscription app, designed around three success criteria.</p>
           <!-- Add or remove .goal blocks freely (3 per row). -->
           <div class="goal-row">
             <div class="goal">
@@ -726,7 +758,7 @@
   <!-- ===================== FOOTER BAND ===================== -->
   <footer class="footer">
     <div class="wrap">
-      <h2>Design is empathy made visible.</h2>
+      <h2>Design that feels right — and data that proves it.</h2>
       <a href="/contact/" class="cta">Let’s Talk! <span class="chev"><i class="fa-solid fa-chevron-right"></i></span></a>
     </div>
   </footer>
